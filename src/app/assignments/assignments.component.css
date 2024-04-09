@@ -31,3 +31,13 @@ table, tr, td {
 .demo-button-container {
   padding-bottom: 16px;
 }
+
+.example-viewport {
+  height: 300px;
+  width: 800px;
+  border: 1px solid black;
+}
+
+.example-item {
+  height: 50px;
+}
