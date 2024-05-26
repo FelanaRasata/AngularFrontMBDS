@@ -61,8 +61,8 @@
           color="primary"
 
           [disabled]="!firstFormGroup.valid && !secondFormGroup.valid"
+          (click)="onSubmit()"
         >
-          <!--        (click)="onSubmit()"-->
           Add an assignment
         </button>
       </div>

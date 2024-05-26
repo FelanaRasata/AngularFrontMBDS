@@ -37,13 +37,13 @@
           <li>
             <span matListItemTitle class="label">Confirmed</span>
             <span matListItemLine class="row">
-              <mat-slide-toggle disabled [ngModel]="assignmentSent?.confirm"></mat-slide-toggle>
+              <mat-slide-toggle [ngModel]="true"></mat-slide-toggle>
             </span>
           </li>
         </div>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-button color="warn">DELETE</button>
+        <button mat-button color="warn" (click)="openDialog()">DELETE</button>
         <button mat-button color="basic" [routerLink]="['/assignment/1/edit']">EDIT</button>
       </mat-card-actions>
     </mat-card>

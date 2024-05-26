@@ -9,12 +9,13 @@ import {SharedService} from "../../../shared/services/shared.service";
 import {Subject} from "../../../shared/model/subject.model";
 import {AssignmentService} from "../../../shared/services/assignment.service";
 import {SubjectService} from "../../../shared/services/subject.service";
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {provideNativeDateAdapter} from "@angular/material/core";
 import {TitlePageComponent} from "../../components/title-page/title-page.component";
 import {Assignment} from "../../../shared/model/assignment.model";
+import {SnackbarService} from "../../../shared/services/snackbar.service";
 
 @Component({
   selector: 'app-add-assignment',
@@ -34,8 +35,7 @@ import {Assignment} from "../../../shared/model/assignment.model";
   templateUrl: './add-assignment.component.html',
   styleUrl: './add-assignment.component.css'
 })
-export class AddAssignmentComponent implements OnInit, OnDestroy
-{
+export class AddAssignmentComponent implements OnInit, OnDestroy {
   title = "Edit assignment"
 
   // champs du formulaire
@@ -49,7 +49,7 @@ export class AddAssignmentComponent implements OnInit, OnDestroy
     remark: ["",],
   });
 
-  subjectList : Subject[] = [];
+  subjectList: Subject[] = [];
 
   isMobile!: boolean;
   private subscription!: Subscription;
@@ -60,6 +60,7 @@ export class AddAssignmentComponent implements OnInit, OnDestroy
     private assignmentService: AssignmentService,
     private subjectService: SubjectService,
     private router: Router,
+    private snackbarService: SnackbarService
   ) {
   }
 
@@ -81,5 +82,32 @@ export class AddAssignmentComponent implements OnInit, OnDestroy
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  onSubmit() {
+
+    // on crée un nouvel assignment
+    let newAssignment = new Assignment();
+
+    // on genere un id aléatoire (plus tard ce sera fait coté serveur par
+    // une base de données)
+    newAssignment.title = this.firstFormGroup.value.title!;
+    newAssignment.dateSending = this.firstFormGroup.value.dateSending!;
+    newAssignment.subject = this.secondFormGroup.value.subject!;
+    newAssignment.remark = this.secondFormGroup.value.remark!;
+
+    newAssignment.confirm = false;
+    newAssignment.score = 0;
+
+
+    // on utilise le service pour directement ajouter
+    // le nouvel assignment dans le tableau
+    this.assignmentService
+      .addAssignment(newAssignment)
+      .subscribe((reponse) => {
+
+        this.snackbarService.action(reponse, "/assignment/1/detail");
+
+      });
   }
 }

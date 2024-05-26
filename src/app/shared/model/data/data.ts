@@ -37,7 +37,7 @@ const assignmentList: Assignment[] = [{
   },
   "score": 20,
   "remark": "Mitsubishi",
-  "confirm": true,
+  "confirm": false,
   "dateSending": new Date("11/9/2023")
 },
   {
@@ -52,7 +52,7 @@ const assignmentList: Assignment[] = [{
     },
     "score": 16,
     "remark": "Dodge",
-    "confirm": true,
+    "confirm": false,
     "dateSending": new Date("11/9/2023")
   },
   {

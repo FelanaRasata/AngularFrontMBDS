@@ -20,6 +20,7 @@ export class AppComponent implements OnInit{
   constructor(private sharedService: SharedService) {
   }
 
+  // Code ChatGPT
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.isMobile = (event.target as Window).innerWidth < 768; // Example breakpoint for mobile

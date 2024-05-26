@@ -25,12 +25,12 @@ export class CardAssignmentComponent implements OnInit, OnDestroy {
   isMobile!: boolean;
   private subscription!: Subscription;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private sharedService: SharedService) {
+  }
 
   ngOnInit(): void {
     this.subscription = this.sharedService.isMobileObservable.subscribe(isMobile => {
       this.isMobile = isMobile;
-      console.log(isMobile)
     });
   }
 

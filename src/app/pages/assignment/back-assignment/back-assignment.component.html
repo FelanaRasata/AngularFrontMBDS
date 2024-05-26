@@ -1,22 +1,23 @@
 <div>
   <app-title-page [title]="title"></app-title-page>
-  <div cdkDropListGroup>
-    <div class="example-container">
-      <h2>To do</h2>
 
+  <div class="container" [class.container-mobile]="isMobile" cdkDropListGroup>
+    <div class="example-container">
+      <h2>To Confirm</h2>
       <div
         cdkDropList
         [cdkDropListData]="todo"
-        class="example-list"
-        (cdkDropListDropped)="drop($event)">
+        class="example-list">
+        <!--        (cdkDropListDropped)="drop($event)">-->
         @for (item of todo; track item) {
-          <div class="example-box" cdkDrag>{{item}}</div>
+          <div class="example-box" cdkDrag>
+            <app-item-assignment></app-item-assignment>
+          </div>
         }
       </div>
     </div>
-
     <div class="example-container">
-      <h2>Done</h2>
+      <h2>Confirmed</h2>
 
       <div
         cdkDropList
@@ -24,7 +25,10 @@
         class="example-list"
         (cdkDropListDropped)="drop($event)">
         @for (item of done; track item) {
-          <div class="example-box" cdkDrag>{{item}}</div>
+          <div class="example-box"
+               >
+            <app-item-assignment></app-item-assignment>
+          </div>
         }
       </div>
     </div>

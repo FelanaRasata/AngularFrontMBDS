@@ -37,7 +37,7 @@ export class AssignmentService {
     };
 
     return of(iResponseType);
-    
+
   }
 
   updateAssignment(assignment: Assignment): Observable<any> {
@@ -49,12 +49,35 @@ export class AssignmentService {
     return this.http.put<Assignment>(baseUrl(uri), assignment);
   }
 
-  deleteAssignment(assignment: Assignment): Observable<any> {
+  // ajoute un assignment et retourne une confirmation
+  addAssignment(assignment: Assignment): Observable<IResponseType<Assignment>> {
+    /*
+        const uri = this.base_api;
+        return this.http.post<IResponseType<Assignment>>(baseUrl(uri), assignment);
+     */
+
+    const iResponseType: IResponseType<Assignment> = {
+      status: assignment ? 201 : 404,
+      message: 'success',
+      data: assignment,
+    };
+    return of(iResponseType);
+  }
+
+  deleteAssignment(idAssignment: string): Observable<IResponseType<string>> {
     // on va supprimer l'assignment dans le tableau
 
     //return of("Assignment supprimé avec succès");
-    const uri = this.base_api + '/' + assignment._id;
-    return this.http.delete(baseUrl(uri));
+    /*const uri = this.base_api + '/' + idAssignment;
+    return this.http.delete<IResponseType<string>>(baseUrl(uri));*/
+
+    const iResponseType: IResponseType<string> = {
+      status: 204,
+      message: 'success',
+      data: 'delete',
+    };
+
+    return of(iResponseType);
   }
 
 }

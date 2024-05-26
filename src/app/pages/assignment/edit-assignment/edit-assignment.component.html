@@ -1,18 +1,24 @@
 <div>
   <app-title-page [title]="title"></app-title-page>
+
+
+
   <mat-stepper [orientation]="isMobile ? 'vertical' : 'horizontal' " [linear]="true" #stepper>
+
+
+
     <mat-step [stepControl]="firstFormGroup">
       <form class="form" [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Step 1</ng-template>
 
         <mat-form-field>
-          <mat-label>Title</mat-label>
-          <input matInput placeholder="Title" required formControlName="title">
+          <mat-label>Student</mat-label>
+          <input matInput formControlName="student">
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Student</mat-label>
-          <input matInput formControlName="student">
+          <mat-label>Title</mat-label>
+          <input matInput placeholder="Title" required formControlName="title">
         </mat-form-field>
 
         <mat-form-field>
@@ -51,6 +57,7 @@
           <textarea matInput formControlName="remark"></textarea>
         </mat-form-field>
 
+        <mat-checkbox formControlName="confirm">Confirm the assignment</mat-checkbox>
 
         <div>
           <button mat-button matStepperPrevious>Back</button>
@@ -68,9 +75,10 @@
           mat-stroked-button
           color="primary"
 
-          [disabled]="!firstFormGroup.valid && !secondFormGroup.valid"
+          [disabled]="this.assignmentSent?.confirm"
+
+
         >
-          <!--        (click)="onSubmit()"-->
           Update
         </button>
       </div>
