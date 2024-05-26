@@ -1,6 +1,6 @@
 <div class="my-body">
 
-  <mat-card class="my-card" [class.my-card-mobile]="isMobile">
+  <mat-card [class.my-card-mobile]="isMobile" class="my-card">
 
     <mat-card-header>
 
@@ -14,7 +14,7 @@
       <mat-form-field appearance="outline" class="login">
 
         <mat-label>Username</mat-label>
-        <input matInput placeholder="Placeholder" [(ngModel)]="username">
+        <input [(ngModel)]="username" matInput placeholder="Placeholder">
         <mat-icon matSuffix>person</mat-icon>
 
       </mat-form-field>
@@ -22,19 +22,19 @@
       <mat-form-field appearance="outline" class="login">
 
         <mat-label>Password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password">
+        <input [(ngModel)]="password" [type]="hide ? 'password' : 'text'" matInput>
 
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
+        <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" mat-icon-button
+                matSuffix>
           <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
 
       </mat-form-field>
 
-      <mat-radio-group aria-label="Select an option" class="my-radio-group" [(ngModel)]="role">
+      <mat-radio-group [(ngModel)]="role" aria-label="Select an option" class="my-radio-group">
 
         @for (elt of roleList; track elt) {
-          <mat-radio-button [checked]="elt === roleList[0]" [value]=elt>{{ elt | titlecase }}</mat-radio-button>
+        <mat-radio-button [checked]="elt === roleList[0]" [value]=elt>{{ elt | titlecase }}</mat-radio-button>
         }
 
       </mat-radio-group>
@@ -43,7 +43,7 @@
 
     <mat-card-actions>
 
-      <button mat-raised-button color="primary" class="my-button login" (click)="signIn()">
+      <button (click)="signIn()" class="my-button login" color="primary" mat-raised-button>
         <mat-icon>login</mat-icon>
         Sign In
       </button>

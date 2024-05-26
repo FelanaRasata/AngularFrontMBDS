@@ -1,13 +1,13 @@
 export class User {
 
-  _id?: string;
+  _id?: string
 
-  role?: string;
+  role!: string
 
-  password?: string;
+  password?: string
 
-  username?: string;
+  username!: string
 
-  name?: string;
+  name!: string
 
 }

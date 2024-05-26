@@ -1,11 +1,12 @@
-import {Routes} from '@angular/router';
-import {LayoutComponent} from "./layout/layout.component";
-import {ListAssignmentComponent} from "./pages/assignment/list-assignment/list-assignment.component";
-import {AddAssignmentComponent} from "./pages/assignment/add-assignment/add-assignment.component";
-import {DetailAssignmentComponent} from "./pages/assignment/detail-assignment/detail-assignment.component";
-import {EditAssignmentComponent} from "./pages/assignment/edit-assignment/edit-assignment.component";
-import {BackAssignmentComponent} from "./pages/assignment/back-assignment/back-assignment.component";
-import {SignInComponent} from "./pages/user/sign-in/sign-in.component";
+import { Routes } from '@angular/router'
+import { LayoutComponent } from './layout/layout.component'
+import { ListAssignmentComponent } from './pages/assignment/list-assignment/list-assignment.component'
+import { AddAssignmentComponent } from './pages/assignment/add-assignment/add-assignment.component'
+import { DetailAssignmentComponent } from './pages/assignment/detail-assignment/detail-assignment.component'
+import { EditAssignmentComponent } from './pages/assignment/edit-assignment/edit-assignment.component'
+import { BackAssignmentComponent } from './pages/assignment/back-assignment/back-assignment.component'
+import { SignInComponent } from './pages/user/sign-in/sign-in.component'
+
 
 export const routes: Routes = [
   {
@@ -52,4 +53,4 @@ export const routes: Routes = [
       },
     ],
   },
-];
+]

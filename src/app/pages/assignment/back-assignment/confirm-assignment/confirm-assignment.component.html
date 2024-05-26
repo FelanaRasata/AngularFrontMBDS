@@ -2,10 +2,10 @@
   <p>What's score for this assignment?</p>
   <mat-form-field>
     <mat-label>Score</mat-label>
-    <input matInput [(ngModel)]="data">
+    <input [(ngModel)]="data" matInput>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button (click)="onNoClick()" mat-button>No Thanks</button>
+  <button [mat-dialog-close]="data" cdkFocusInitial mat-button>Ok</button>
 </mat-dialog-actions>

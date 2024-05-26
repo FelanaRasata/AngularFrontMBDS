@@ -1,13 +1,14 @@
-import {User} from "./user.model";
+import { User } from './user.model'
+
 
 export class Subject {
 
-  _id?: string;
+  _id!: string
 
-  title?: string;
+  title!: string
 
-  image?: string;
+  image!: string
 
-  teacher?:User;
+  teacher!: User
 
 }

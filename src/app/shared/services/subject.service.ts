@@ -1,19 +1,22 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Subject} from "../model/subject.model";
-import {Observable, of} from "rxjs";
-import {IResponseType} from "../utils/interface";
-import {subjectList} from "../model/data/data";
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { Subject } from '../model/subject.model'
+import { Observable, of } from 'rxjs'
+import { IResponseType } from '../utils/interface'
+import { subjectList } from '../model/data/data'
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubjectService {
 
-  base_api = "/api/subjects";
+  base_api = '/api/subjects'
+
 
   constructor(private http: HttpClient) {
   }
+
 
   getSubjects(): Observable<IResponseType<Subject[]>> {
 
@@ -25,9 +28,9 @@ export class SubjectService {
       status: subjectList ? 200 : 404,
       message: subjectList ? 'success' : 'Not Found',
       data: subjectList,
-    };
+    }
 
-    return of(iResponseType);
+    return of(iResponseType)
 
   }
 

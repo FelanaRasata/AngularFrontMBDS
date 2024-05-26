@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {IResponseType} from "../utils/interface";
-import {Router} from "@angular/router";
+import { Injectable } from '@angular/core'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { IResponseType } from '../utils/interface'
+import { Router } from '@angular/router'
 
 
 @Injectable({
@@ -10,24 +10,27 @@ import {Router} from "@angular/router";
 export class SnackbarService {
   duration: number = 5000
 
+
   constructor(private snackBar: MatSnackBar, private router: Router) {
   }
+
 
   action(response: IResponseType<any>, link: string) {
 
     if (response.status == 204 || response.status == 200 || response.status == 201) {
 
-      this.router.navigate([link], {state: {message: response.message}});
+      this.router.navigate([link], { state: { message: response.message } })
 
     }
 
     if (response.status == 400 || response.status == 404) {
 
-      this.showAlert(response.message, 'Close');
+      this.showAlert(response.message, 'Close')
 
     }
 
   }
+
 
   // Code ChatGPT
   showAlert(message: string, action: string = 'Close') {
@@ -38,7 +41,7 @@ export class SnackbarService {
 
       duration,
 
-    });
+    })
 
   }
 

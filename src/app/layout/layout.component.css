@@ -34,7 +34,7 @@ h1.example-app-name {
   /*background-color: cornflowerblue;*/
   padding-right: 12px;
   padding-left: 12px;
-  width:30%;
+  width: 30%;
 }
 
 .my-sidenav-mobile {
@@ -44,12 +44,12 @@ h1.example-app-name {
   width: 80%;
 }
 
-.my-sidenav-content{
-  padding-left:  10%;
-  padding-right:  10%;
+.my-sidenav-content {
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .content {
-  padding-top:  20px;
-  padding-bottom:  20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }

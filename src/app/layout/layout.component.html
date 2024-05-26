@@ -1,16 +1,16 @@
-<div class="example-container" [class.example-is-mobile]="isMobile">
-  <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()">
+<div [class.example-is-mobile]="isMobile" class="example-container">
+  <mat-toolbar class="example-toolbar" color="primary">
+    <button (click)="snav.toggle()" mat-icon-button>
       <mat-icon>menu</mat-icon>
     </button>
     <h1 class="example-app-name">{{ title }}</h1>
   </mat-toolbar>
 
-  <mat-sidenav-container class="example-sidenav-container"
-                         [style.marginTop.px]="isMobile ? 56 : 0">
-    <mat-sidenav #snav [mode]="'over'" class="my-sidenav"
-                 [class.my-sidenav-mobile]="isMobile"
-                 [fixedInViewport]="isMobile" fixedTopGap="56">
+  <mat-sidenav-container [style.marginTop.px]="isMobile ? 56 : 0"
+                         class="example-sidenav-container">
+    <mat-sidenav #snav [class.my-sidenav-mobile]="isMobile" [fixedInViewport]="isMobile"
+                 [mode]="'over'"
+                 class="my-sidenav" fixedTopGap="56">
       <app-sidebar></app-sidebar>
     </mat-sidenav>
 

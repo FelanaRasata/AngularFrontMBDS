@@ -1,14 +1,14 @@
-<div class="container" >
-  <app-title-page [title]="title" ></app-title-page>
-  <div class="my-add-button" >
-    <button mat-fab extended color="warn" [routerLink]="['/assignment/add']">
+<div class="container">
+  <app-title-page [title]="title"></app-title-page>
+  <div class="my-add-button">
+    <button [routerLink]="['/assignment/add']" color="warn" extended mat-fab>
       <mat-icon>add</mat-icon>
       Add Assignment
     </button>
   </div>
 
   @for (nav of fillerNav; track nav) {
-    <app-card-assignment></app-card-assignment>
+  <app-card-assignment></app-card-assignment>
   }
 </div>
 

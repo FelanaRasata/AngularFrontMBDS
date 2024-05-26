@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
-import {MatListModule} from "@angular/material/list";
-import {RouterLink} from "@angular/router";
+import { Component } from '@angular/core'
+import { MatListModule } from '@angular/material/list'
+import { RouterLink } from '@angular/router'
+
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +15,6 @@ import {RouterLink} from "@angular/router";
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-
 
 
 }

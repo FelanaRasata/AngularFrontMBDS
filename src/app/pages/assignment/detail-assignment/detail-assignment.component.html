@@ -2,7 +2,7 @@
   <app-title-page [title]="title"></app-title-page>
 
   <div class="container">
-    <mat-card class="example-card" [class.example-card-mobile]="isMobile">
+    <mat-card [class.example-card-mobile]="isMobile" class="example-card">
       <mat-card-header>
         <mat-card-title-group>
           <mat-card-title>{{ assignmentSent?.title }}</mat-card-title>
@@ -11,40 +11,40 @@
       </mat-card-header>
       <mat-card-content class="card-content">
         <div class="img">
-          <img mat-card-xl-image [src]="assignmentSent?.subject?.image">
+          <img [src]="assignmentSent?.subject?.image" mat-card-xl-image>
         </div>
         <div class="list">
           <li>
-            <span matListItemTitle class="label">Student</span>
-            <span matListItemLine class="row">{{ assignmentSent?.student?.name }}</span>
+            <span class="label" matListItemTitle>Student</span>
+            <span class="row" matListItemLine>{{ assignmentSent?.student?.name }}</span>
           </li>
           <li>
-            <span matListItemTitle class="label">Teacher</span>
-            <span matListItemLine class="row">{{ assignmentSent?.subject?.teacher?.name }}</span>
+            <span class="label" matListItemTitle>Teacher</span>
+            <span class="row" matListItemLine>{{ assignmentSent?.subject?.teacher?.name }}</span>
           </li>
           <li>
-            <span matListItemTitle class="label">Date Sending</span>
-            <span matListItemLine class="row">{{ assignmentSent?.dateSending | date }}</span>
+            <span class="label" matListItemTitle>Date Sending</span>
+            <span class="row" matListItemLine>{{ assignmentSent?.dateSending | date }}</span>
           </li>
           <li>
-            <span matListItemTitle class="label">Score</span>
-            <span matListItemLine class="row">{{ assignmentSent?.score | number }}</span>
+            <span class="label" matListItemTitle>Score</span>
+            <span class="row" matListItemLine>{{ assignmentSent?.score | number }}</span>
           </li>
           <li>
-            <span matListItemTitle class="label">Remark</span>
-            <span matListItemLine class="row">{{ longText }}</span>
+            <span class="label" matListItemTitle>Remark</span>
+            <span class="row" matListItemLine>{{ longText }}</span>
           </li>
           <li>
-            <span matListItemTitle class="label">Confirmed</span>
-            <span matListItemLine class="row">
+            <span class="label" matListItemTitle>Confirmed</span>
+            <span class="row" matListItemLine>
               <mat-slide-toggle [ngModel]="true"></mat-slide-toggle>
             </span>
           </li>
         </div>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-button color="warn" (click)="openDialog()">DELETE</button>
-        <button mat-button color="basic" [routerLink]="['/assignment/1/edit']">EDIT</button>
+        <button (click)="openDialog()" color="warn" mat-button>DELETE</button>
+        <button [routerLink]="['/assignment/1/edit']" color="basic" mat-button>EDIT</button>
       </mat-card-actions>
     </mat-card>
   </div>

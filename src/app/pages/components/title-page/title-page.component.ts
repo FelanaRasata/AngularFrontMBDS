@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {TitleCasePipe, UpperCasePipe} from "@angular/common";
+import { Component, Input } from '@angular/core'
+import { TitleCasePipe, UpperCasePipe } from '@angular/common'
+
 
 @Component({
   selector: 'app-title-page',
@@ -12,5 +13,5 @@ import {TitleCasePipe, UpperCasePipe} from "@angular/common";
   styleUrl: './title-page.component.css'
 })
 export class TitlePageComponent {
-  @Input() title!: string;
+  @Input() title!: string
 }

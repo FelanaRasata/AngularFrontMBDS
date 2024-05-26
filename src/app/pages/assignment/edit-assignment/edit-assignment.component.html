@@ -2,36 +2,34 @@
   <app-title-page [title]="title"></app-title-page>
 
 
-
-  <mat-stepper [orientation]="isMobile ? 'vertical' : 'horizontal' " [linear]="true" #stepper>
-
+  <mat-stepper #stepper [linear]="true" [orientation]="isMobile ? 'vertical' : 'horizontal' ">
 
 
     <mat-step [stepControl]="firstFormGroup">
-      <form class="form" [formGroup]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" class="form">
         <ng-template matStepLabel>Step 1</ng-template>
 
         <mat-form-field>
           <mat-label>Student</mat-label>
-          <input matInput formControlName="student">
+          <input formControlName="student" matInput>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Title</mat-label>
-          <input matInput placeholder="Title" required formControlName="title">
+          <input formControlName="title" matInput placeholder="Title" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Date of sending</mat-label>
           <input
-            matInput
             [matDatepicker]="picker"
             formControlName="dateSending"
+            matInput
             name="date"
             required
           />
           <mat-hint>dd/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <div>
@@ -40,21 +38,21 @@
       </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
-      <form class="form" [formGroup]="secondFormGroup">
+      <form [formGroup]="secondFormGroup" class="form">
         <ng-template matStepLabel>Step 2</ng-template>
         <mat-form-field>
           <mat-label>Subject</mat-label>
-          <input matInput formControlName="subject">
+          <input formControlName="subject" matInput>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Score</mat-label>
-          <input matInput formControlName="score">
+          <input formControlName="score" matInput>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Leave a remark</mat-label>
-          <textarea matInput formControlName="remark"></textarea>
+          <textarea formControlName="remark" matInput></textarea>
         </mat-form-field>
 
         <mat-checkbox formControlName="confirm">Confirm the assignment</mat-checkbox>
@@ -72,10 +70,10 @@
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button
-          mat-stroked-button
+          [disabled]="this.assignmentSent?.confirm"
           color="primary"
 
-          [disabled]="this.assignmentSent?.confirm"
+          mat-stroked-button
 
 
         >

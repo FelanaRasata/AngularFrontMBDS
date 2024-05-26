@@ -29,6 +29,7 @@ export interface PaginationResult<T> {
 
 }
 
+
 export interface Paginator {
 
   size: number;

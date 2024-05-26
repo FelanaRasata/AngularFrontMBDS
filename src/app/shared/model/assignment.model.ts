@@ -1,22 +1,23 @@
-import {User} from "./user.model";
-import {Subject} from "./subject.model";
+import { User } from './user.model'
+import { Subject } from './subject.model'
+
 
 export class Assignment {
 
-  _id?: string;
+  _id?: string
 
-  title?: string;
+  title!: string
 
-  student?: User;
+  student!: User
 
-  subject?: Subject;
+  subject!: Subject
 
-  dateSending?: Date;
+  dateSending?: Date
 
-  score?: number;
+  score?: number
 
-  remark?: string;
+  remark?: string
 
-  confirm?: boolean;
+  confirm?: boolean
 
 }

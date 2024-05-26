@@ -1,5 +1,5 @@
-import {Component, Inject} from '@angular/core';
-import {MatButtonModule} from "@angular/material/button";
+import { Component, Inject } from '@angular/core'
+import { MatButtonModule } from '@angular/material/button'
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -8,10 +8,10 @@ import {
   MatDialogModule,
   MatDialogRef,
   MatDialogTitle
-} from "@angular/material/dialog";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {FormsModule} from "@angular/forms";
+} from '@angular/material/dialog'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { FormsModule } from '@angular/forms'
 
 
 @Component({
@@ -38,7 +38,8 @@ export class ConfirmAssignmentComponent {
   ) {
   }
 
+
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 }
