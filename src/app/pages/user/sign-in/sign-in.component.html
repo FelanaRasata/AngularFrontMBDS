@@ -1,0 +1,56 @@
+<div class="my-body">
+
+  <mat-card class="my-card" [class.my-card-mobile]="isMobile">
+
+    <mat-card-header>
+
+      <mat-card-title>Sign In</mat-card-title>
+      <mat-card-subtitle>{{ title }}</mat-card-subtitle>
+
+    </mat-card-header>
+
+    <mat-card-content style="margin-top: 40px">
+
+      <mat-form-field appearance="outline" class="login">
+
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Placeholder" [(ngModel)]="username">
+        <mat-icon matSuffix>person</mat-icon>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="login">
+
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password">
+
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+
+      </mat-form-field>
+
+      <mat-radio-group aria-label="Select an option" class="my-radio-group" [(ngModel)]="role">
+
+        @for (elt of roleList; track elt) {
+          <mat-radio-button [checked]="elt === roleList[0]" [value]=elt>{{ elt | titlecase }}</mat-radio-button>
+        }
+
+      </mat-radio-group>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+
+      <button mat-raised-button color="primary" class="my-button login" (click)="signIn()">
+        <mat-icon>login</mat-icon>
+        Sign In
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>
+

@@ -1,0 +1,51 @@
+<div>
+  <app-title-page [title]="title"></app-title-page>
+
+  <div class="container">
+    <mat-card class="example-card" [class.example-card-mobile]="isMobile">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>{{ assignmentSent?.title }}</mat-card-title>
+          <mat-card-subtitle>{{ assignmentSent?.subject?.title }}</mat-card-subtitle>
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content class="card-content">
+        <div class="img">
+          <img mat-card-xl-image [src]="assignmentSent?.subject?.image">
+        </div>
+        <div class="list">
+          <li>
+            <span matListItemTitle class="label">Student</span>
+            <span matListItemLine class="row">{{ assignmentSent?.student?.name }}</span>
+          </li>
+          <li>
+            <span matListItemTitle class="label">Teacher</span>
+            <span matListItemLine class="row">{{ assignmentSent?.subject?.teacher?.name }}</span>
+          </li>
+          <li>
+            <span matListItemTitle class="label">Date Sending</span>
+            <span matListItemLine class="row">{{ assignmentSent?.dateSending | date }}</span>
+          </li>
+          <li>
+            <span matListItemTitle class="label">Score</span>
+            <span matListItemLine class="row">{{ assignmentSent?.score | number }}</span>
+          </li>
+          <li>
+            <span matListItemTitle class="label">Remark</span>
+            <span matListItemLine class="row">{{ longText }}</span>
+          </li>
+          <li>
+            <span matListItemTitle class="label">Confirmed</span>
+            <span matListItemLine class="row">
+              <mat-slide-toggle disabled [ngModel]="assignmentSent?.confirm"></mat-slide-toggle>
+            </span>
+          </li>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button color="warn">DELETE</button>
+        <button mat-button color="basic" [routerLink]="['/assignment/1/edit']">EDIT</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

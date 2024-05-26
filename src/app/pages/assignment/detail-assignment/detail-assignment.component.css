@@ -1,0 +1,70 @@
+.example-card {
+  max-width: 50%;
+  margin: auto;
+  gap: 20px;
+}
+
+.example-card-mobile {
+  max-width: fit-content;
+  margin: auto;
+  gap: 20px;
+
+}
+
+.img {
+  display: flex;
+  justify-content: center;
+  margin-left: -10%;
+}
+
+.card-content {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 20px;
+  margin-left: 10%;
+  padding: 10px;
+}
+
+
+.card-content-mobile {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 20px;
+  margin: 10%;
+  padding: 10px;
+}
+
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  display: table;
+}
+
+.label {
+  display: table-cell;
+  font-size: 14px;
+  width: 30%;
+}
+
+.row {
+  display: table-cell;
+  justify-content: left;
+  width: 60%;
+  overflow-wrap: break-word; /* Ensures text will wrap */
+  word-wrap: break-word; /* For compatibility with older browsers */
+  white-space: normal; /* Ensures that text will wrap as expected */
+  vertical-align: top; /* Aligns the content at the top of the cell */
+}
+
+mat-card-title-group{
+  display: flex;
+  justify-content: center;
+}

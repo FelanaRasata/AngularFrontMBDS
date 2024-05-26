@@ -1,0 +1,79 @@
+<div>
+  <app-title-page [title]="title"></app-title-page>
+  <mat-stepper [orientation]="isMobile ? 'vertical' : 'horizontal' " [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form class="form" [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Step 1</ng-template>
+
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput placeholder="Title" required formControlName="title">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Student</mat-label>
+          <input matInput formControlName="student">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Date of sending</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="dateSending"
+            name="date"
+            required
+          />
+          <mat-hint>dd/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form class="form" [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Step 2</ng-template>
+        <mat-form-field>
+          <mat-label>Subject</mat-label>
+          <input matInput formControlName="subject">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Score</mat-label>
+          <input matInput formControlName="score">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Leave a remark</mat-label>
+          <textarea matInput formControlName="remark"></textarea>
+        </mat-form-field>
+
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button
+          mat-stroked-button
+          color="primary"
+
+          [disabled]="!firstFormGroup.valid && !secondFormGroup.valid"
+        >
+          <!--        (click)="onSubmit()"-->
+          Update
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

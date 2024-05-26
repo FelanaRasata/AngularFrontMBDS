@@ -1,0 +1,25 @@
+<div class="example-container" [class.example-is-mobile]="isMobile">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="example-app-name">{{ title }}</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="isMobile ? 56 : 0">
+    <mat-sidenav #snav [mode]="'over'" class="my-sidenav"
+                 [class.my-sidenav-mobile]="isMobile"
+                 [fixedInViewport]="isMobile" fixedTopGap="56">
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="my-sidenav-content">
+      <div class="content">
+        <!--        <router-outlet [isMobile]="isMobile" ></router-outlet>-->
+        <router-outlet></router-outlet>
+
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
