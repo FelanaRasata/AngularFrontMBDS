@@ -34,7 +34,7 @@ export function hasPermission(index: number) {
 
 }
 
-export const roleList: string[] = ["teacher", "student"];
+export const roleList: string[] = ["TEACHER", "STUDENT"];
 
 
 /*
