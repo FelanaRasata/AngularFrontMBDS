@@ -1,51 +1,51 @@
 <div>
   <app-title-page [title]="title"></app-title-page>
 
-  <div class="container">
-    <mat-card [class.example-card-mobile]="isMobile" class="example-card">
-      <mat-card-header>
+  <mat-card [class.example-card-mobile]="isMobile" class="example-card">
+    <mat-card-content class="card-content">
+      <div class="img">
+        <img [src]="assignmentSent?.subject?.image" mat-card-xl-image>
+      </div>
+      <div class="list">
         <mat-card-title-group>
           <mat-card-title>{{ assignmentSent?.title }}</mat-card-title>
           <mat-card-subtitle>{{ assignmentSent?.subject?.title }}</mat-card-subtitle>
         </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content class="card-content">
-        <div class="img">
-          <img [src]="assignmentSent?.subject?.image" mat-card-xl-image>
-        </div>
-        <div class="list">
-          <li>
-            <span class="label" matListItemTitle>Student</span>
-            <span class="row" matListItemLine>{{ assignmentSent?.student?.name }}</span>
-          </li>
-          <li>
-            <span class="label" matListItemTitle>Teacher</span>
-            <span class="row" matListItemLine>{{ assignmentSent?.subject?.teacher?.name }}</span>
-          </li>
-          <li>
-            <span class="label" matListItemTitle>Date Sending</span>
-            <span class="row" matListItemLine>{{ assignmentSent?.dateSending | date }}</span>
-          </li>
-          <li>
-            <span class="label" matListItemTitle>Score</span>
-            <span class="row" matListItemLine>{{ assignmentSent?.score | number }}</span>
-          </li>
-          <li>
-            <span class="label" matListItemTitle>Remark</span>
-            <span class="row" matListItemLine>{{ longText }}</span>
-          </li>
-          <li>
-            <span class="label" matListItemTitle>Confirmed</span>
-            <span class="row" matListItemLine>
-              <mat-slide-toggle [ngModel]="true"></mat-slide-toggle>
+        <li>
+          <span class="label" matListItemTitle>Student</span>
+          <span class="row" matListItemLine>{{ assignmentSent?.student?.name }}</span>
+        </li>
+        <li>
+          <span class="label" matListItemTitle>Teacher</span>
+          <span class="row" matListItemLine>{{ assignmentSent?.subject?.teacher?.name }}</span>
+        </li>
+        <li>
+          <span class="label" matListItemTitle>Date Sending</span>
+          <span class="row" matListItemLine>{{ assignmentSent?.dateSending | date }}</span>
+        </li>
+        <li>
+          <span class="label" matListItemTitle>Score</span>
+          <span class="row" matListItemLine>{{ assignmentSent?.score | number }}</span>
+        </li>
+        <li>
+          <span class="label" matListItemTitle>Remark</span>
+          <span class="row" matListItemLine>{{ assignmentSent?.remark }}</span>
+        </li>
+        <li>
+          <span class="label" matListItemTitle>Confirmed</span>
+          <span class="row" matListItemLine>
+              @if (assignmentSent?.confirm) {
+                <mat-icon>assignment</mat-icon>
+              } @else {
+                <mat-icon>assignment_turned_in</mat-icon>
+              }
             </span>
-          </li>
-        </div>
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <button (click)="openDialog()" color="warn" mat-button>DELETE</button>
-        <button [routerLink]="['/assignment/1/edit']" color="basic" mat-button>EDIT</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+        </li>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button (click)="openDialog()" color="warn" mat-button>DELETE</button>
+      <button [routerLink]="['/assignment/1/edit']" color="basic" mat-button>EDIT</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

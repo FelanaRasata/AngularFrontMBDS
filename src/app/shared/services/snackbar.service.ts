@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { IResponseType } from '../utils/interface'
 import { Router } from '@angular/router'
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 
 @Injectable({
@@ -22,9 +23,9 @@ export class SnackbarService {
       this.router.navigate([link], { state: { message: response.message } })
 
     }
+    console.log("error" , response)
 
     if (response.status == 400 || response.status == 404) {
-
       this.showAlert(response.message, 'Close')
 
     }

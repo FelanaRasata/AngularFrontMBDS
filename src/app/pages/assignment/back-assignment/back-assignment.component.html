@@ -2,35 +2,41 @@
   <app-title-page [title]="title"></app-title-page>
 
   <div [class.container-mobile]="isMobile" cdkDropListGroup class="container">
+
     <div class="example-container">
-      <h2>To Confirm</h2>
-      <div
-        [cdkDropListData]="todo"
-        cdkDropList
-        class="example-list">
-        <!--        (cdkDropListDropped)="drop($event)">-->
-        @for (item of todo; track item) {
-        <div class="example-box" cdkDrag>
-          <app-item-assignment></app-item-assignment>
+
+      <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport" #scrollerToBeConfirmed>
+        <h2>To Confirm</h2>
+        <div
+          [cdkDropListData]="assignmentsToBeConfirmed.docs"
+          cdkDropList
+          class="example-list">
+          <!--        (cdkDropListDropped)="drop($event)">-->
+          @for (assignment of assignmentsToBeConfirmed.docs; track assignment) {
+            <div class="example-box" cdkDrag>
+              <app-item-assignment [assignment]="assignment"></app-item-assignment>
+            </div>
+          }
         </div>
-        }
-      </div>
+      </cdk-virtual-scroll-viewport>
     </div>
     <div class="example-container">
-      <h2>Confirmed</h2>
 
-      <div
-        (cdkDropListDropped)="drop($event)"
-        [cdkDropListData]="done"
-        cdkDropList
-        class="example-list">
-        @for (item of done; track item) {
-        <div class="example-box"
-             >
-          <app-item-assignment></app-item-assignment>
+      <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport" #scrollerConfirmed>
+        <h2>Confirmed</h2>
+
+        <div
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListData]="assignmentsConfirmed.docs"
+          cdkDropList
+          class="example-list">
+          @for (assignment of assignmentsConfirmed.docs; track assignment) {
+            <div class="example-box" cdkDrag>
+              <app-item-assignment [assignment]="assignment"></app-item-assignment>
+            </div>
+          }
         </div>
-        }
-      </div>
+      </cdk-virtual-scroll-viewport>
     </div>
   </div>
 

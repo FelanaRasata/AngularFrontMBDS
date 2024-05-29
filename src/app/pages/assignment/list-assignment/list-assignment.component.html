@@ -7,8 +7,8 @@
     </button>
   </div>
 
-  @for (nav of fillerNav; track nav) {
-  <app-card-assignment></app-card-assignment>
+  @for (assignment of assignmentList.docs; track assignment) {
+  <app-card-assignment [assignment]="assignment"></app-card-assignment>
   }
 </div>
 

@@ -6,6 +6,7 @@ import { DetailAssignmentComponent } from './pages/assignment/detail-assignment/
 import { EditAssignmentComponent } from './pages/assignment/edit-assignment/edit-assignment.component'
 import { BackAssignmentComponent } from './pages/assignment/back-assignment/back-assignment.component'
 import { SignInComponent } from './pages/user/sign-in/sign-in.component'
+import {authGuard} from "./shared/guards/auth.guard";
 
 
 export const routes: Routes = [
@@ -23,6 +24,7 @@ export const routes: Routes = [
   {
     path: 'assignment',
     component: LayoutComponent,
+    canActivateChild: [authGuard],
     children: [
       {
         path: 'list/:page/:size',

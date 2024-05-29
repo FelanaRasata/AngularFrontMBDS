@@ -15,23 +15,25 @@ import { SharedService } from '../../../shared/services/shared.service'
 import { MatDialog } from '@angular/material/dialog'
 import { DeleteAssignmentComponent } from './delete-assignment/delete-assignment.component'
 import { SnackbarService } from '../../../shared/services/snackbar.service'
+import {MatIcon, MatIconModule} from "@angular/material/icon";
 
 
 @Component({
   selector: 'app-detail-assignment',
   standalone: true,
-  imports: [
-    MatListModule,
-    TitlePageComponent,
-    MatCardModule,
-    MatButtonModule,
-    DatePipe,
-    MatSlideToggleModule,
-    FormsModule,
-    CommonModule,
-    MatDividerModule,
-    RouterLink
-  ],
+    imports: [
+        MatListModule,
+        TitlePageComponent,
+        MatCardModule,
+        MatButtonModule,
+        DatePipe,
+        MatSlideToggleModule,
+        FormsModule,
+        CommonModule,
+        MatDividerModule,
+        RouterLink,
+        MatIconModule
+    ],
   templateUrl: './detail-assignment.component.html',
   styleUrl: './detail-assignment.component.css'
 })

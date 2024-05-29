@@ -21,26 +21,6 @@ export function handleError<T>(operation: any, result?: T) {
   }
 }*/
 
-export function getToken() {
-
-  const user: string = localStorage.getItem('user')!
-  return user ? user : null
-
-}
-
-
-// index in array of roles: 0= Teacher | 1= Student
-export function hasPermission(index: number) {
-
-  const token = getToken()
-  return !!token?.includes(roleList[index] + '-')
-
-}
-
-
-export const roleList: string[] = ['TEACHER', 'STUDENT']
-
-
 /*export function paginationResultToPaginator<T>(paginationResult: PaginationResult<T>, size: number): Paginator {
 
   return {

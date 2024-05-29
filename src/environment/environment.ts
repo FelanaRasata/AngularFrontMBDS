@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8010/api/assignments',
+  apiUrl: 'http://localhost:8888/api/',
   // other variables
 }

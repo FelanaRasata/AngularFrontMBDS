@@ -1,23 +1,59 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { Assignment } from '../model/assignment.model'
-import { Observable, of } from 'rxjs'
-import { assignmentList } from '../model/data/data'
-import { IResponseType } from '../utils/interface'
-import { baseUrl } from '../utils/utils'
+import {Injectable} from '@angular/core'
+import {HttpClient} from '@angular/common/http'
+import {Assignment} from '../model/assignment.model'
+import {Observable, of} from 'rxjs'
+import {assignmentList} from '../model/data/data'
+import {IResponseType, PaginationResult} from '../utils/interface'
+import {baseUrl} from '../utils/utils'
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentService {
-  assignments: Assignment[] = []
 
   base_api = '/api/assignments'
 
 
   constructor(private http: HttpClient) {
-    this.assignments = assignmentList
+  }
+
+  private paginateAssignments(): PaginationResult<Assignment[]> {
+
+    const page = 1
+    const size = 20
+
+    const totalDocs = assignmentList.length;
+    const totalPages = Math.ceil(totalDocs / size);
+
+
+    const startIdx = page * size;
+    const endIdx = Math.min(startIdx + size, totalDocs);
+
+    const docs = assignmentList.slice(startIdx, endIdx);
+
+    return {
+      docs,
+      totalDocs,
+      totalPages,
+      currentPage: page,
+      hasNextPage: page < totalPages - 1,
+      hasPrevPage: page > 0,
+      nextPage: page < totalPages - 1 ? page + 1 : null,
+      prevPage: page > 0 ? page - 1 : null,
+    };
+  }
+
+  getAssignmentList(
+    page: number,
+    limit: number
+  ): Observable<IResponseType<PaginationResult<Assignment[]>>> {
+
+    const uri = this.base_api + "?page=" + page + "&limit=" + limit;
+    return this.http.get<IResponseType<Assignment[]>>(baseUrl(uri));
+
+
+
   }
 
 
@@ -30,7 +66,7 @@ export class AssignmentService {
   */
 
     let
-      assignment = this.assignments.find((a) => a._id === _id)
+      assignment = assignmentList.find((a) => a._id === _id)
 
     const iResponseType: IResponseType<Assignment> = {
       status: assignment ? 200 : 404,

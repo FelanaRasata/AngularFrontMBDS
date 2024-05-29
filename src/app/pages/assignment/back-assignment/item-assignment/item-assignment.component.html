@@ -1,21 +1,26 @@
-<div>
+<!--<div class="example-card">-->
   <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
-                       class="example-card">
+                       >
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Shiba Inu
+        {{ assignment.title }}
       </mat-panel-title>
       <mat-panel-description>
-        Large
+        {{ assignment.dateSending | date }}
       </mat-panel-description>
     </mat-expansion-panel-header>
 
     <div class="card-content-mobile">
-      <p>{{ longText }}</p>
-      <img class="sm-image" src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+      <div>
+        <br>
+        From :  {{ assignment.student.name }}
+        <br>
+        <i>&commat;{{ assignment.student.name }}</i>
+      </div>
+      <img class="sm-image" [src]="assignment.subject.image">
     </div>
 
   </mat-expansion-panel>
 
-</div>
+<!--</div>-->
 

@@ -1,17 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { MatRadioModule } from '@angular/material/radio'
-import { CommonModule } from '@angular/common'
-import { FormsModule } from '@angular/forms'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule } from '@angular/material/icon'
-import { MatCardModule } from '@angular/material/card'
-import { UserService } from '../../../shared/services/user.service'
-import { Router } from '@angular/router'
-import { roleList } from '../../../shared/utils/utils'
-import { Subscription } from 'rxjs'
-import { SharedService } from '../../../shared/services/shared.service'
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {MatRadioModule} from '@angular/material/radio'
+import {CommonModule} from '@angular/common'
+import {FormsModule} from '@angular/forms'
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatInputModule} from '@angular/material/input'
+import {MatButtonModule} from '@angular/material/button'
+import {MatIconModule} from '@angular/material/icon'
+import {MatCardModule} from '@angular/material/card'
+import {UserService} from '../../../shared/services/user.service'
+import {Subscription} from 'rxjs'
+import {SharedService} from '../../../shared/services/shared.service'
+import {SnackbarService} from "../../../shared/services/snackbar.service";
+import {AuthService} from "../../../shared/services/auth.service";
+import {Role} from "../../../shared/utils/role";
 
 
 @Component({
@@ -35,12 +36,10 @@ export class SignInComponent implements OnInit, OnDestroy {
   hide: boolean = true
 
   username: string = 'btodarini0@smugmug.com'
-  password: string = ''
+  password: string = '123456789'
   role: string = ''
 
   title: string = 'Assignment Management'
-
-  roleList!: string[]
 
   isMobile!: boolean
   private subscription!: Subscription
@@ -48,16 +47,16 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    private router: Router,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private snackbarService: SnackbarService,
+    private authService: AuthService
   ) {
   }
 
 
   ngOnInit(): void {
 
-    this.roleList = roleList
-    this.role = this.roleList[0]
+    this.role = Role.tr
 
     // Take the variable which see if the device is a mobile or not
     this.subscription = this.sharedService.isMobileObservable.subscribe(
@@ -73,20 +72,13 @@ export class SignInComponent implements OnInit, OnDestroy {
   signIn(): void {
 
     // Connection with back-end
-    this.userService.signIn(this.username, this.password, this.role).subscribe((data) => {
+    this.userService.signIn(this.username, this.password, this.role).subscribe((response) => {
 
       console.log('Données arrivées')
+      if (response.status == 201)
+        this.authService.setToken(response.data)
 
-      if (data.status) {
-
-        localStorage.setItem('user', data.data!)
-        this.router.navigate(['assignment/list', 0, 10]).then(r => console.log('Signed In'))
-
-      } else {
-
-        console.log('Username error')
-
-      }
+      this.snackbarService.action(response, '/assignment/list/1/10')
 
     })
 
@@ -103,4 +95,5 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   }
 
+  protected readonly Role = Role;
 }

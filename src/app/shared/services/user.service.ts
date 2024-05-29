@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { Observable, of } from 'rxjs'
-import { IResponseType } from '../utils/interface'
-import { userList } from '../model/data/data'
-import { User } from '../model/user.model'
-import { baseUrl } from '../utils/utils'
+import {Injectable} from '@angular/core'
+import {HttpClient} from '@angular/common/http'
+import {Observable} from 'rxjs'
+import {IResponseType} from '../utils/interface'
+import {User} from '../model/user.model'
+import {baseUrl} from '../utils/utils'
 
 
 @Injectable({
@@ -12,7 +11,7 @@ import { baseUrl } from '../utils/utils'
 })
 export class UserService {
 
-  base_api = '/api/users'
+  base_api = 'users'
 
 
   constructor(private http: HttpClient) {
@@ -28,22 +27,14 @@ export class UserService {
    */
   signIn(email: string, password: string, role: string): Observable<IResponseType<string>> {
 
-    /*
-     const uri = this.base_api + "/" + email + "/" + password + "/" + role;
-     return this.http.get<IResponseType<string>>(baseUrl(uri))
-     */
-
-    const user = userList.find(a => {
-      return a.username === email && a.role === role
-    })
-
-    const iResponseType: IResponseType<string> = {
-      status: user ? 200 : 404,
-      message: user ? 'success' : 'Not Found',
-      data: user?.role + '-' + user?.username,
+    const body = {
+      username: email,
+      password: password,
+      role: role
     }
 
-    return of(iResponseType)
+    const uri = this.base_api + "/login"
+    return this.http.post<IResponseType<string>>(baseUrl(uri), body)
 
   }
 
@@ -53,9 +44,9 @@ export class UserService {
    * token : le token correspondant l'utilisateur
    * return User : l'utilisateur  identifié par le token
    */
-  getUserByToken(token: string): Observable<IResponseType<User>> {
+  getUserByToken(): Observable<IResponseType<User>> {
 
-    const uri = this.base_api + '/' + token
+    const uri = this.base_api
     return this.http.get<IResponseType<User>>(baseUrl(uri))
 
   }
