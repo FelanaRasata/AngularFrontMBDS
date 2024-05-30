@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core'
-import {MatListModule} from '@angular/material/list'
-import {Router, RouterLink} from '@angular/router'
-import {MatDialog} from "@angular/material/dialog";
-import {AuthService} from "../../shared/services/auth.service";
-import {SignOutComponent} from "../../pages/user/sign-out/sign-out.component";
-import {Role} from "../../shared/utils/role";
+import { Component, OnInit } from '@angular/core'
+import { MatListModule } from '@angular/material/list'
+import { Router, RouterLink } from '@angular/router'
+import { MatDialog } from '@angular/material/dialog'
+import { SignOutComponent } from '@pages/user/sign-out/sign-out.component'
+import { AuthService } from '@shared/core/services/auth.service'
+import { EUserRole } from '@shared/core/types/enums'
 
 
 @Component({
@@ -18,9 +18,10 @@ import {Role} from "../../shared/utils/role";
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent implements OnInit{
+export class SidebarComponent implements OnInit {
 
   disabled = true
+
 
   constructor(
     public dialog: MatDialog,
@@ -29,13 +30,16 @@ export class SidebarComponent implements OnInit{
   ) {
   }
 
-  ngOnInit() {
-    this.authService.isAuthorized(Role.tr).then(role => {
 
+  ngOnInit() {
+
+    this.authService.isAuthorized(EUserRole.tr)
+      .then(role => {
         this.disabled = !role
-      }
-    )
+      })
+
   }
+
 
   openDialog() {
     const dialogRef = this.dialog.open(SignOutComponent)
@@ -43,9 +47,9 @@ export class SidebarComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.authService.signOut()
-        this.router.navigate(["/"], {
+        this.router.navigate(['/'], {
           state: {
-            message: "You logged out 😥",
+            message: 'You logged out 😥',
           }
         })
       }

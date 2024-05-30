@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core'
-import {CardAssignmentComponent} from './card-assignment/card-assignment.component'
-import {MatDividerModule} from '@angular/material/divider'
-import {MatButtonModule} from '@angular/material/button'
-import {MatIconModule} from '@angular/material/icon'
-import {NavigationEnd, Router, RouterModule} from '@angular/router'
-import {TitlePageComponent} from '../../components/title-page/title-page.component'
-import {SnackbarService} from '../../../shared/services/snackbar.service'
-import {PaginationResult} from "../../../shared/utils/interface";
-import {Assignment} from "../../../shared/model/assignment.model";
-import {AssignmentService} from "../../../shared/services/assignment.service";
-import {AuthService} from "../../../shared/services/auth.service";
-import {Role} from "../../../shared/utils/role";
+import { Component, OnInit } from '@angular/core'
+import { CardAssignmentComponent } from './card-assignment/card-assignment.component'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { NavigationEnd, Router, RouterModule } from '@angular/router'
+import { TitlePageComponent } from '@shared/components/title-page/title-page.component'
+import { IPaginationResult } from '@shared/core/types/interfaces'
+import { IAssignment } from '@shared/core/models/entities/assignment.model'
+import { SnackbarService } from '@shared/core/services/snackbar.service'
+import { AssignmentService } from '@shared/core/services/assignment.service'
+import { AuthService } from '@shared/core/services/auth.service'
+import { EUserRole } from '@shared/core/types/enums'
+import { isEmpty } from '@shared/core/utils/utils'
 
 
 @Component({
@@ -31,16 +32,17 @@ export class ListAssignmentComponent implements OnInit {
 
   title = 'List of assignment'
 
-  assignmentList!: PaginationResult<Assignment[]>
+  assignmentList!: IPaginationResult<IAssignment[]>
   page = 0
   limit = 20
 
   disabledAdd = true
 
+
   constructor(
     private router: Router,
     private snackbarService: SnackbarService,
-    private assignmentService: AssignmentService,
+    public assignmentService: AssignmentService,
     private authService: AuthService
   ) {
   }
@@ -63,19 +65,17 @@ export class ListAssignmentComponent implements OnInit {
 
     })
 
-    this.assignmentService.getAssignmentList(this.page, this.limit).subscribe(
-      response => {
+    this.assignmentService.getAssignmentList(this.page, this.limit)
+      .subscribe(message => {
 
-        if (response.status == 200)
-          this.assignmentList = response.data!
-        else
-          this.snackbarService.showAlert(response.message)
+        if (!isEmpty(message))
+          this.snackbarService.showAlert(String(message))
+
       })
 
-    this.authService.isAuthorized(Role.st).then(role => {
-        this.disabledAdd = !role
-      }
-    )
+    this.authService.isAuthorized(EUserRole.st).then(role => {
+      this.disabledAdd = !role
+    })
 
   }
 

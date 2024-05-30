@@ -2,15 +2,15 @@
 
   <mat-card-content>
     <div [class.card-content-mobile]="isMobile" class="card-content">
-      <img mat-card-lg-image [src]="assignment.subject.image">
+      <img [src]="assignment.subject.image" mat-card-lg-image>
 
       <div>
         <mat-card-title-group>
           <mat-card-title>
             @if (assignment.confirm) {
-              <mat-icon>assignment</mat-icon>
+            <mat-icon>assignment</mat-icon>
             } @else {
-              <mat-icon>assignment_turned_in</mat-icon>
+            <mat-icon>assignment_turned_in</mat-icon>
             }
             {{ assignment.title }}
           </mat-card-title>
@@ -18,9 +18,9 @@
         </mat-card-title-group>
         <div>
           <br>
-          From :  {{ assignment.student.name }}
+          From : {{ assignment.student?.name }}
           <br>
-          <i>&commat;{{ assignment.student.name }}</i>
+          <i>&commat;{{ assignment.student?.name }}</i>
 
         </div>
 
@@ -28,7 +28,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button routerLink='/assignment/{{assignment._id}}/detail' color="primary" mat-stroked-button>
+    <button color="primary" mat-stroked-button routerLink='/assignment/{{assignment._id}}/detail'>
       <mat-icon>info</mat-icon>
       More
     </button>

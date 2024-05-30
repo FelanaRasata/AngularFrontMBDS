@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Role} from "../utils/role";
+import { Injectable } from '@angular/core'
+import { EUserRole } from '../types/enums'
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class AuthService {
 
   constructor() {
   }
+
 
   setToken(object: any) {
     let role = object.userRole
@@ -20,38 +22,50 @@ export class AuthService {
     localStorage.setItem('token', token)
   }
 
+
   getToken(): string {
+
     const token = localStorage.getItem('token')
-    if (token == null)
-      return ""
-    return token.slice(0, -2)
+
+    return token === null ? '' : token.slice(0, -2)
+
   }
 
+
   getAuthorization(): string {
+
     const token = localStorage.getItem('token')
-    if (token == null)
-      return ""
-    return token.slice(-2)
+
+    return token === null ? '' : token.slice(-2)
+
   }
+
 
   isLogged(): Promise<boolean> {
 
     return new Promise((resolve, reject) => {
-      resolve(this.getToken() != "");
-    });
+      resolve(this.getToken() != '')
+    })
+
   }
+
 
   isAuthorized(role: string): Promise<boolean> {
+
     const roleIndex = this.getAuthorization()
-    const roleValue = Role[roleIndex as keyof typeof Role];
+    const roleValue = EUserRole[roleIndex as keyof typeof EUserRole]
 
     return new Promise((resolve, reject) => {
-      resolve(role == roleValue);
-    });
+      resolve(role === roleValue)
+    })
 
   }
 
-  signOut(){
+
+  signOut() {
+
     localStorage.removeItem('token')
+
   }
+
 }

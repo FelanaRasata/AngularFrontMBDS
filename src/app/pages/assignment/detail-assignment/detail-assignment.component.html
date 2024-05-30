@@ -31,18 +31,18 @@
           <span class="label" matListItemTitle>Confirmed</span>
           <span class="row" matListItemLine>
               @if (assignmentSent?.confirm) {
-                <mat-icon>assignment_turned_in</mat-icon>
+            <mat-icon>assignment_turned_in</mat-icon>
               } @else {
-                <mat-icon>assignment</mat-icon>
+            <mat-icon>assignment</mat-icon>
               }
             </span>
         </li>
       </div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button (click)="openDialog()" color="warn" mat-button [disabled]="disabledButtons">DELETE</button>
-      <button routerLink='/assignment/{{assignmentSent?._id}}/edit' color="basic" mat-button
-              [disabled]="disabledButtons">EDIT
+      <button (click)="openDialog()" [disabled]="disabledButtons" color="warn" mat-button>DELETE</button>
+      <button [disabled]="disabledButtons" color="basic" mat-button
+              routerLink='/assignment/{{assignmentSent?._id}}/edit'>EDIT
       </button>
     </mat-card-actions>
   </mat-card>

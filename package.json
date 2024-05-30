@@ -2,10 +2,11 @@
   "name": "assignment-front",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "node server.js",
-    "build": "npm install; ng build",
-    "watch": "ng build --watch --configuration development",
+    "start:dev": "ng serve",
+    "start:prod": "node server.js",
+    "start:setup": "npm isntall --verbose",
+    "build": "ng build",
+    "build:watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
@@ -37,5 +38,9 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.3.2"
+  },
+  "engines": {
+    "node": "20.13.1",
+    "npm": "10.5.2"
   }
 }

@@ -9,16 +9,16 @@ export interface IResponseType<T> {
 }
 
 
-export interface PaginationResult<T> {
+export interface IPaginationResult<T> {
 
   items?: T
 
-  paginator: Paginator
+  paginator: IPaginator
 
 }
 
 
-export interface Paginator {
+export interface IPaginator {
 
   totalItems: number
 
@@ -37,5 +37,16 @@ export interface Paginator {
   prevPage: boolean | null
 
   nextPage: boolean | null
+
+}
+
+
+export interface IPaginationData {
+
+  page: number;
+
+  limit: number;
+
+  totalItems: number;
 
 }

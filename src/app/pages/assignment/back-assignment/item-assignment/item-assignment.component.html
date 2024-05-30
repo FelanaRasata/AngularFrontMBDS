@@ -1,26 +1,26 @@
 <!--<div class="example-card">-->
-  <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
-                       >
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ assignment.title }}
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ assignment.dateSending | date }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+<mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ assignment.title }}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{ assignment.dateSending | date }}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
 
-    <div class="card-content-mobile">
-      <div>
-        <br>
-        From :  {{ assignment.student.name }}
-        <br>
-        <i>&commat;{{ assignment.student.name }}</i>
-      </div>
-      <img class="sm-image" [src]="assignment.subject.image">
+  <div class="card-content-mobile">
+    <div>
+      <br>
+      From :  {{ assignment.student?.name }}
+      <br>
+      <i>&commat;{{ assignment.student?.name }}</i>
     </div>
+    <img [src]="assignment.subject.image" class="sm-image">
+  </div>
 
-  </mat-expansion-panel>
+</mat-expansion-panel>
 
 <!--</div>-->
 

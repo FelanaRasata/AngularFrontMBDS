@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core'
-import {TitlePageComponent} from '../../components/title-page/title-page.component'
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { TitlePageComponent } from '@shared/components/title-page/title-page.component'
 import {
   CdkDrag,
   CdkDragDrop,
@@ -9,16 +9,17 @@ import {
   moveItemInArray,
   transferArrayItem
 } from '@angular/cdk/drag-drop'
-import {ItemAssignmentComponent} from './item-assignment/item-assignment.component'
-import {Subscription} from 'rxjs'
-import {SharedService} from '../../../shared/services/shared.service'
-import {MatDialog} from '@angular/material/dialog'
-import {ConfirmAssignmentComponent} from './confirm-assignment/confirm-assignment.component'
-import {CdkVirtualScrollViewport, ScrollingModule} from "@angular/cdk/scrolling";
-import {AssignmentService} from "../../../shared/services/assignment.service";
-import {Assignment} from "../../../shared/model/assignment.model";
-import {PaginationResult} from "../../../shared/utils/interface";
-import {SnackbarService} from "../../../shared/services/snackbar.service";
+import { ItemAssignmentComponent } from './item-assignment/item-assignment.component'
+import { Subscription } from 'rxjs'
+import { MatDialog } from '@angular/material/dialog'
+import { ConfirmAssignmentComponent } from './confirm-assignment/confirm-assignment.component'
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling'
+import { IPaginationResult } from '@shared/core/types/interfaces'
+import { IAssignment } from '@shared/core/models/entities/assignment.model'
+import { SharedService } from '@shared/core/services/shared.service'
+import { AssignmentService } from '@shared/core/services/assignment.service'
+import { SnackbarService } from '@shared/core/services/snackbar.service'
+import { isEmpty } from '@shared/core/utils/utils'
 
 
 @Component({
@@ -39,22 +40,25 @@ import {SnackbarService} from "../../../shared/services/snackbar.service";
 })
 export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  title = 'Update the assignments'
-
-  page = 0
-  size = 20
-
+  title: string = 'Update the assignments'
+  page: number = 0
+  size: number = 20
   isMobile!: boolean
 
+  @ViewChild('scrollerConfirmed') scrollerConfirmed!: CdkVirtualScrollViewport
+  @ViewChild('scrollerToBeConfirmed') scrollerToBeConfirmed!: CdkVirtualScrollViewport
+
   private subscription!: Subscription
+
 
   constructor(
     private sharedService: SharedService,
     public dialog: MatDialog,
-    private assignmentService: AssignmentService,
+    public assignmentService: AssignmentService,
     private snackbarService: SnackbarService,
   ) {
   }
+
 
   ngOnInit(): void {
 
@@ -63,7 +67,23 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
         this.isMobile = isMobile
       })
 
-    this.assignmentService.getAssignmentList(this.page, this.size).subscribe(
+    this.assignmentService.getFilteredAssignmentList(this.page, this.size, true)
+      .subscribe(message => {
+
+        if (!isEmpty(message))
+          this.snackbarService.showAlert(String(message))
+
+      })
+
+    this.assignmentService.getFilteredAssignmentList(this.page, this.size, false)
+      .subscribe(message => {
+
+        if (!isEmpty(message))
+          this.snackbarService.showAlert(String(message))
+
+      })
+
+    /*this.assignmentService.getAssignmentList(this.page, this.size).subscribe(
       (response) => {
 
         if (response.status == 200) {
@@ -71,14 +91,9 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
           this.assignmentsToBeConfirmed = response.data!
         } else
           this.snackbarService.showAlert(response.message)
-      })
+      })*/
 
   }
-
-  assignmentsConfirmed!: PaginationResult<Assignment[]>
-  assignmentsToBeConfirmed!: PaginationResult<Assignment[]>
-  @ViewChild('scrollerConfirmed') scrollerConfirmed!: CdkVirtualScrollViewport;
-  @ViewChild('scrollerToBeConfirmed') scrollerToBeConfirmed!: CdkVirtualScrollViewport;
 
 
   ngAfterViewInit(): void {
@@ -88,13 +103,18 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
 
-  drop(event: CdkDragDrop<Assignment[] | undefined, any>) {
+  drop(event: CdkDragDrop<IAssignment[], any>) {
+
     if (event.previousContainer === event.container) {
+
       moveItemInArray(event.container.data!, event.previousIndex, event.currentIndex)
+
     } else {
+
       const dialogRef = this.dialog.open(ConfirmAssignmentComponent, {
         data: 0,
       })
+
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`)
         if (result) {
@@ -112,9 +132,11 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   ngOnDestroy(): void {
+
     if (this.subscription) {
       this.subscription.unsubscribe()
     }
+
   }
 
 }

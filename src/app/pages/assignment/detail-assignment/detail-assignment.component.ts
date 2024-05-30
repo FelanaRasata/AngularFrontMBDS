@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { MatListModule } from '@angular/material/list'
-import { TitlePageComponent } from '../../components/title-page/title-page.component'
-import { Assignment } from '../../../shared/model/assignment.model'
-import { AssignmentService } from '../../../shared/services/assignment.service'
+import { TitlePageComponent } from '@shared/components/title-page/title-page.component'
+import { IAssignment } from '@shared/core/models/entities/assignment.model'
+import { AssignmentService } from '@shared/core/services/assignment.service'
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
@@ -11,31 +11,31 @@ import { FormsModule } from '@angular/forms'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatDividerModule } from '@angular/material/divider'
 import { Subscription } from 'rxjs'
-import { SharedService } from '../../../shared/services/shared.service'
+import { SharedService } from '@shared/core/services/shared.service'
 import { MatDialog } from '@angular/material/dialog'
 import { DeleteAssignmentComponent } from './delete-assignment/delete-assignment.component'
-import { SnackbarService } from '../../../shared/services/snackbar.service'
-import {MatIcon, MatIconModule} from "@angular/material/icon";
-import {Role} from "../../../shared/utils/role";
-import {AuthService} from "../../../shared/services/auth.service";
+import { MatIconModule } from '@angular/material/icon'
+import { SnackbarService } from '@shared/core/services/snackbar.service'
+import { AuthService } from '@shared/core/services/auth.service'
+import { EUserRole } from '@shared/core/types/enums'
 
 
 @Component({
   selector: 'app-detail-assignment',
   standalone: true,
-    imports: [
-        MatListModule,
-        TitlePageComponent,
-        MatCardModule,
-        MatButtonModule,
-        DatePipe,
-        MatSlideToggleModule,
-        FormsModule,
-        CommonModule,
-        MatDividerModule,
-        RouterLink,
-        MatIconModule
-    ],
+  imports: [
+    MatListModule,
+    TitlePageComponent,
+    MatCardModule,
+    MatButtonModule,
+    DatePipe,
+    MatSlideToggleModule,
+    FormsModule,
+    CommonModule,
+    MatDividerModule,
+    RouterLink,
+    MatIconModule
+  ],
   templateUrl: './detail-assignment.component.html',
   styleUrl: './detail-assignment.component.css'
 })
@@ -43,12 +43,11 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
 
   title = 'Assignment Detail'
 
-  assignmentSent!: Assignment | undefined
+  assignmentSent!: IAssignment | undefined
 
   isMobile!: boolean
-  private subscription!: Subscription
-
   disabledButtons = true
+  private subscription!: Subscription
 
 
   constructor(
@@ -64,7 +63,7 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    // On recupere l'id de l'assignment dans l'URL à l'aide de ActivatedRoute
+    // On récupère l'id de l'assignment dans l'URL à l'aide de ActivatedRoute
     const id = this.route.snapshot.params['id']
 
     // On utilise le service pour récupérer l'assignment avec cet id
@@ -90,7 +89,7 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.authService.isAuthorized(Role.tr).then(role => {
+    this.authService.isAuthorized(EUserRole.tr).then(role => {
         this.disabledButtons = !role
       }
     )
@@ -103,7 +102,7 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.assignmentService.deleteAssignment(this.assignmentSent?._id!).subscribe(response => {
-          this.snackbarService.action(response, '/assignment/list/1/20', "Assignment Deleted")
+          this.snackbarService.action(response, '/assignment/list/1/20', 'Assignment Deleted')
         })
       }
     })

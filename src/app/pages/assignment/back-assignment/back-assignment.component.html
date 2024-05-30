@@ -5,35 +5,37 @@
 
     <div class="example-container">
 
-      <cdk-virtual-scroll-viewport appendOnly itemSize="50" [class.example-viewport-mobile]="isMobile" class="example-viewport" #scrollerToBeConfirmed>
+      <cdk-virtual-scroll-viewport #scrollerToBeConfirmed [class.example-viewport-mobile]="isMobile" appendOnly
+                                   class="example-viewport" itemSize="50">
         <h2>To Confirm</h2>
         <div
-          [cdkDropListData]="assignmentsToBeConfirmed?.items"
+          [cdkDropListData]="assignmentService.notConfirmedAssignments.value"
           cdkDropList
           class="example-list">
           <!--        (cdkDropListDropped)="drop($event)">-->
-          @for (assignment of assignmentsToBeConfirmed?.items; track assignment) {
-            <div class="example-box" cdkDrag>
-              <app-item-assignment [assignment]="assignment"></app-item-assignment>
-            </div>
+          @for (assignment of assignmentService.notConfirmedAssignments.value; track assignment) {
+          <div class="example-box" cdkDrag>
+            <app-item-assignment [assignment]="assignment"></app-item-assignment>
+          </div>
           }
         </div>
       </cdk-virtual-scroll-viewport>
     </div>
     <div class="example-container">
 
-      <cdk-virtual-scroll-viewport appendOnly itemSize="50" [class.example-viewport-mobile]="isMobile" class="example-viewport" #scrollerConfirmed>
+      <cdk-virtual-scroll-viewport #scrollerConfirmed [class.example-viewport-mobile]="isMobile" appendOnly
+                                   class="example-viewport" itemSize="50">
         <h2>Confirmed</h2>
 
         <div
           (cdkDropListDropped)="drop($event)"
-          [cdkDropListData]="assignmentsConfirmed?.items"
+          [cdkDropListData]="assignmentService.confirmedAssignments.value"
           cdkDropList
           class="example-list">
-          @for (assignment of assignmentsConfirmed?.items; track assignment) {
-            <div class="example-box" cdkDrag>
-              <app-item-assignment [assignment]="assignment"></app-item-assignment>
-            </div>
+          @for (assignment of assignmentService.confirmedAssignments.value; track assignment) {
+          <div class="example-box" cdkDrag>
+            <app-item-assignment [assignment]="assignment"></app-item-assignment>
+          </div>
           }
         </div>
       </cdk-virtual-scroll-viewport>

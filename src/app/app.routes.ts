@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router'
-import { LayoutComponent } from './layout/layout.component'
-import { ListAssignmentComponent } from './pages/assignment/list-assignment/list-assignment.component'
-import { AddAssignmentComponent } from './pages/assignment/add-assignment/add-assignment.component'
-import { DetailAssignmentComponent } from './pages/assignment/detail-assignment/detail-assignment.component'
-import { EditAssignmentComponent } from './pages/assignment/edit-assignment/edit-assignment.component'
-import { BackAssignmentComponent } from './pages/assignment/back-assignment/back-assignment.component'
-import { SignInComponent } from './pages/user/sign-in/sign-in.component'
-import {authGuard} from "./shared/guards/auth.guard";
-import {teacherGuard} from "./shared/guards/teacher.guard";
-import {studentGuard} from "./shared/guards/student.guard";
+import { LayoutComponent } from '@layout/layout.component'
+import { ListAssignmentComponent } from '@pages/assignment/list-assignment/list-assignment.component'
+import { AddAssignmentComponent } from '@pages/assignment/add-assignment/add-assignment.component'
+import { DetailAssignmentComponent } from '@pages/assignment/detail-assignment/detail-assignment.component'
+import { EditAssignmentComponent } from '@pages/assignment/edit-assignment/edit-assignment.component'
+import { BackAssignmentComponent } from '@pages/assignment/back-assignment/back-assignment.component'
+import { SignInComponent } from '@pages/user/sign-in/sign-in.component'
+import { authGuard } from '@shared/core/guards/auth.guard'
+import { teacherGuard } from '@shared/core/guards/teacher.guard'
+import { studentGuard } from '@shared/core/guards/student.guard'
 
 
 export const routes: Routes = [

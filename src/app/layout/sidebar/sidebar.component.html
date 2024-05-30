@@ -2,10 +2,10 @@
   <a [routerLink]="['/assignment/list/1/20']" class="my-nav-item" mat-list-item>
     Assignment List
   </a>
-  <a [routerLink]="['/assignment/back']" class="my-nav-item" [disabled]="disabled" mat-list-item>
+  <a [disabled]="disabled" [routerLink]="['/assignment/back']" class="my-nav-item" mat-list-item>
     Update Assignments
   </a>
-  <a class="my-nav-item" mat-list-item (click)="openDialog()">
+  <a (click)="openDialog()" class="my-nav-item" mat-list-item>
     Sign Out
   </a>
 </mat-nav-list>

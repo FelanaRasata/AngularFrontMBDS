@@ -33,7 +33,7 @@
 
       <mat-radio-group [(ngModel)]="role" aria-label="Select an option" class="my-radio-group">
 
-        <mat-radio-button checked [value]=Role.tr>{{ Role.tr | titlecase }}</mat-radio-button>
+        <mat-radio-button [value]=Role.tr checked>{{ Role.tr | titlecase }}</mat-radio-button>
         <mat-radio-button [value]=Role.st>{{ Role.st | titlecase }}</mat-radio-button>
 
       </mat-radio-group>

@@ -1,19 +1,19 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
-import {MatRadioModule} from '@angular/material/radio'
-import {CommonModule} from '@angular/common'
-import {FormsModule} from '@angular/forms'
-import {MatFormFieldModule} from '@angular/material/form-field'
-import {MatInputModule} from '@angular/material/input'
-import {MatButtonModule} from '@angular/material/button'
-import {MatIconModule} from '@angular/material/icon'
-import {MatCardModule} from '@angular/material/card'
-import {UserService} from '../../../shared/services/user.service'
-import {Subscription} from 'rxjs'
-import {SharedService} from '../../../shared/services/shared.service'
-import {SnackbarService} from "../../../shared/services/snackbar.service";
-import {AuthService} from "../../../shared/services/auth.service";
-import {Role} from "../../../shared/utils/role";
-import {NavigationEnd, Router} from "@angular/router";
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { MatRadioModule } from '@angular/material/radio'
+import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { MatCardModule } from '@angular/material/card'
+import { Subscription } from 'rxjs'
+import { NavigationEnd, Router } from '@angular/router'
+import { EUserRole } from '@shared/core/types/enums'
+import { UserService } from '@shared/core/services/user.service'
+import { SharedService } from '@shared/core/services/shared.service'
+import { SnackbarService } from '@shared/core/services/snackbar.service'
+import { AuthService } from '@shared/core/services/auth.service'
 
 
 @Component({
@@ -38,11 +38,12 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   username: string = 'btodarini0@smugmug.com'
   password: string = '123456789'
-  role: string = ''
+  role: EUserRole = EUserRole.tr
 
   title: string = 'Assignment Management'
 
   isMobile!: boolean
+  protected readonly Role = EUserRole
   private subscription!: Subscription
 
 
@@ -73,11 +74,11 @@ export class SignInComponent implements OnInit, OnDestroy {
 
     })
 
-    this.role = Role.tr
+    this.role = EUserRole.tr
 
     // Take the variable which see if the device is a mobile or not
-    this.subscription = this.sharedService.isMobileObservable.subscribe(
-      isMobile => {
+    this.subscription = this.sharedService.isMobileObservable
+      .subscribe(isMobile => {
 
         this.isMobile = isMobile
 
@@ -89,14 +90,15 @@ export class SignInComponent implements OnInit, OnDestroy {
   signIn(): void {
 
     // Connection with back-end
-    this.userService.signIn(this.username, this.password, this.role).subscribe((response) => {
+    this.userService.signIn(this.username, this.password, this.role)
+      .subscribe((response) => {
 
-      if (response.status == 201)
-        this.authService.setToken(response.data)
+        if (response.status == 201)
+          this.authService.setToken(response.data)
 
-      this.snackbarService.action(response, '/assignment/list/1/10')
+        this.snackbarService.action(response, '/assignment/list/1/10')
 
-    })
+      })
 
   }
 
@@ -110,6 +112,4 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
 
   }
-
-  protected readonly Role = Role;
 }

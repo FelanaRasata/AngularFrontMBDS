@@ -14,7 +14,7 @@
         <mat-select formControlName="subject">
           <mat-option></mat-option>
           @for (subject of subjectList; track subject._id) {
-            <mat-option [value]="subject">{{ subject.title }}</mat-option>
+          <mat-option [value]="subject">{{ subject.title }}</mat-option>
           }
         </mat-select>
       </mat-form-field>

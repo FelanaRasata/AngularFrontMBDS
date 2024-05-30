@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
-import { SharedService } from './shared/services/shared.service'
+import { SharedService } from './shared/core/services/shared.service'
 
 
 @Component({
