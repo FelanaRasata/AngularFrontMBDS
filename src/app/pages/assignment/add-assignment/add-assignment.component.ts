@@ -1,21 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { MatInputModule } from '@angular/material/input'
-import { MatButtonModule } from '@angular/material/button'
-import { MatStepperModule } from '@angular/material/stepper'
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { Subscription } from 'rxjs'
-import { SharedService } from '../../../shared/services/shared.service'
-import { Subject } from '../../../shared/model/subject.model'
-import { AssignmentService } from '../../../shared/services/assignment.service'
-import { SubjectService } from '../../../shared/services/subject.service'
-import { Router } from '@angular/router'
-import { MatSelectModule } from '@angular/material/select'
-import { MatDatepickerModule } from '@angular/material/datepicker'
-import { provideNativeDateAdapter } from '@angular/material/core'
-import { TitlePageComponent } from '../../components/title-page/title-page.component'
-import { Assignment } from '../../../shared/model/assignment.model'
-import { SnackbarService } from '../../../shared/services/snackbar.service'
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {MatInputModule} from '@angular/material/input'
+import {MatButtonModule} from '@angular/material/button'
+import {MatStepperModule} from '@angular/material/stepper'
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms'
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {Subscription} from 'rxjs'
+import {SharedService} from '../../../shared/services/shared.service'
+import {Subject} from '../../../shared/model/subject.model'
+import {AssignmentService} from '../../../shared/services/assignment.service'
+import {SubjectService} from '../../../shared/services/subject.service'
+import {Router} from '@angular/router'
+import {MatSelectModule} from '@angular/material/select'
+import {MatDatepickerModule} from '@angular/material/datepicker'
+import {provideNativeDateAdapter} from '@angular/material/core'
+import {TitlePageComponent} from '../../components/title-page/title-page.component'
+import {Assignment} from '../../../shared/model/assignment.model'
+import {SnackbarService} from '../../../shared/services/snackbar.service'
 import {MatCardModule} from "@angular/material/card";
 
 
@@ -68,8 +68,14 @@ export class AddAssignmentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.subjectService.getSubjects().subscribe(response => {
-      if (response.status == 200)
+      if (response.status == 200) {
+
         this.subjectList = response.data!
+
+      } else {
+        this.snackbarService.showAlert(response.message)
+      }
+
     })
 
     this.subscription = this.sharedService.isMobileObservable.subscribe(isMobile => {
@@ -98,20 +104,19 @@ export class AddAssignmentComponent implements OnInit, OnDestroy {
     newAssignment.confirm = false
     newAssignment.score = 0
 
-    console.log(JSON.stringify(newAssignment))
 
 
     // on utilise le service pour directement ajouter
     // le nouvel assignment dans le tableau
-    /*this.assignmentService
+    this.assignmentService
       .addAssignment(newAssignment)
       .subscribe((reponse) => {
 
-        let link = ""
-        if (reponse.status == 201) link = '/assignment/'+ reponse.data?._id +'/detail'
+        console.log(reponse)
 
-        this.snackbarService.action(reponse, link, "Assignment Created")
 
-      })*/
+        this.snackbarService.action(reponse, '/assignment/list/1/20', "Assignment Created")
+
+      })
   }
 }

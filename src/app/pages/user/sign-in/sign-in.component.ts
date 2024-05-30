@@ -91,7 +91,6 @@ export class SignInComponent implements OnInit, OnDestroy {
     // Connection with back-end
     this.userService.signIn(this.username, this.password, this.role).subscribe((response) => {
 
-      console.log('Données arrivées')
       if (response.status == 201)
         this.authService.setToken(response.data)
 

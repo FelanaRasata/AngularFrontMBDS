@@ -28,7 +28,7 @@ export class SnackbarService {
 
     }
 
-    if (response.status == 400 || response.status == 404) {
+    if (response.status == 400 || response.status == 404 || response.status == 402) {
       this.showAlert(response.message, 'Close')
 
     }

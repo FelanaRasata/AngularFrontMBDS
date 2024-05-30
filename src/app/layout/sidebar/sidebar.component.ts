@@ -1,9 +1,10 @@
-import {Component} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {MatListModule} from '@angular/material/list'
 import {Router, RouterLink} from '@angular/router'
 import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../../shared/services/auth.service";
 import {SignOutComponent} from "../../pages/user/sign-out/sign-out.component";
+import {Role} from "../../shared/utils/role";
 
 
 @Component({
@@ -17,13 +18,23 @@ import {SignOutComponent} from "../../pages/user/sign-out/sign-out.component";
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
+
+  disabled = true
 
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
     private router: Router
   ) {
+  }
+
+  ngOnInit() {
+    this.authService.isAuthorized(Role.tr).then(role => {
+
+        this.disabled = !role
+      }
+    )
   }
 
   openDialog() {

@@ -1,4 +1,3 @@
-<!--
 <div>
   <app-title-page [title]="title"></app-title-page>
 
@@ -6,14 +5,14 @@
 
     <div class="example-container">
 
-      <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport" #scrollerToBeConfirmed>
+      <cdk-virtual-scroll-viewport appendOnly itemSize="50" [class.example-viewport-mobile]="isMobile" class="example-viewport" #scrollerToBeConfirmed>
         <h2>To Confirm</h2>
         <div
-          [cdkDropListData]="assignmentsToBeConfirmed.items"
+          [cdkDropListData]="assignmentsToBeConfirmed?.items"
           cdkDropList
           class="example-list">
-          &lt;!&ndash;        (cdkDropListDropped)="drop($event)">&ndash;&gt;
-          @for (assignment of assignmentsToBeConfirmed.items; track assignment) {
+          <!--        (cdkDropListDropped)="drop($event)">-->
+          @for (assignment of assignmentsToBeConfirmed?.items; track assignment) {
             <div class="example-box" cdkDrag>
               <app-item-assignment [assignment]="assignment"></app-item-assignment>
             </div>
@@ -23,15 +22,15 @@
     </div>
     <div class="example-container">
 
-      <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport" #scrollerConfirmed>
+      <cdk-virtual-scroll-viewport appendOnly itemSize="50" [class.example-viewport-mobile]="isMobile" class="example-viewport" #scrollerConfirmed>
         <h2>Confirmed</h2>
 
         <div
           (cdkDropListDropped)="drop($event)"
-          [cdkDropListData]="assignmentsConfirmed.items"
+          [cdkDropListData]="assignmentsConfirmed?.items"
           cdkDropList
           class="example-list">
-          @for (assignment of assignmentsConfirmed.items; track assignment) {
+          @for (assignment of assignmentsConfirmed?.items; track assignment) {
             <div class="example-box" cdkDrag>
               <app-item-assignment [assignment]="assignment"></app-item-assignment>
             </div>
@@ -42,4 +41,3 @@
   </div>
 
 </div>
--->
