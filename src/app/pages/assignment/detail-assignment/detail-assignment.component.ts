@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog'
 import { DeleteAssignmentComponent } from './delete-assignment/delete-assignment.component'
 import { SnackbarService } from '../../../shared/services/snackbar.service'
 import {MatIcon, MatIconModule} from "@angular/material/icon";
+import {Role} from "../../../shared/utils/role";
+import {AuthService} from "../../../shared/services/auth.service";
 
 
 @Component({
@@ -44,10 +46,9 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
   assignmentSent!: Assignment | undefined
 
   isMobile!: boolean
-  longText = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
-  from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
-  originally bred for hunting.`
   private subscription!: Subscription
+
+  disabledButtons = true
 
 
   constructor(
@@ -56,7 +57,8 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
     private router: Router,
     private sharedService: SharedService,
     public dialog: MatDialog,
-    public snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private authService: AuthService,
   ) {
   }
 
@@ -87,6 +89,11 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
         }
       }
     })
+
+    this.authService.isAuthorized(Role.tr).then(role => {
+        this.disabledButtons = !role
+      }
+    )
   }
 
 
@@ -94,10 +101,9 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DeleteAssignmentComponent)
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`)
       if (result) {
         this.assignmentService.deleteAssignment(this.assignmentSent?._id!).subscribe(response => {
-          this.snackbarService.action(response, '/assignment/list/1/10')
+          this.snackbarService.action(response, '/assignment/list/1/20', "Assignment Deleted")
         })
       }
     })

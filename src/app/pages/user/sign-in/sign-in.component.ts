@@ -13,6 +13,7 @@ import {SharedService} from '../../../shared/services/shared.service'
 import {SnackbarService} from "../../../shared/services/snackbar.service";
 import {AuthService} from "../../../shared/services/auth.service";
 import {Role} from "../../../shared/utils/role";
+import {NavigationEnd, Router} from "@angular/router";
 
 
 @Component({
@@ -49,12 +50,28 @@ export class SignInComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private sharedService: SharedService,
     private snackbarService: SnackbarService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
   ) {
   }
 
 
   ngOnInit(): void {
+
+    this.router.events.subscribe(event => {
+
+      if (event instanceof NavigationEnd) {
+
+        const navigation = this.router.getCurrentNavigation()
+        const state = navigation?.extras.state as { message?: string }
+
+        if (state?.message) {
+          this.snackbarService.showAlert(state.message, 'Close')
+        }
+
+      }
+
+    })
 
     this.role = Role.tr
 

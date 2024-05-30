@@ -1,4 +1,5 @@
-import { Component } from '@angular/core'
+import {Component, Input} from '@angular/core'
+import {Paginator} from "../../../shared/utils/interface";
 
 
 @Component({
@@ -9,5 +10,5 @@ import { Component } from '@angular/core'
   styleUrl: './paginator-page.component.css'
 })
 export class PaginatorPageComponent {
-
+  @Input() paginator!: Paginator
 }

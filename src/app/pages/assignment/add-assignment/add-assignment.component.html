@@ -1,64 +1,28 @@
 <div>
   <app-title-page [title]="title"></app-title-page>
-  <mat-stepper #stepper [linear]="true" [orientation]="isMobile ? 'vertical' : 'horizontal' ">
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup" class="form">
-        <ng-template matStepLabel>Step 1</ng-template>
+  <mat-card>
+    <form [formGroup]="firstFormGroup" class="form">
+      <ng-template matStepLabel>Step 1</ng-template>
 
-        <mat-form-field>
-          <mat-label>Title</mat-label>
-          <input formControlName="title" matInput placeholder="Title" required>
-        </mat-form-field>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input formControlName="title" matInput placeholder="Title" required>
+      </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Date of sending</mat-label>
-          <input
-            [matDatepicker]="picker"
-            formControlName="dateSending"
-            matInput
-            name="date"
-            required
-          />
-          <mat-hint>dd/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup" class="form">
-        <ng-template matStepLabel>Step 2</ng-template>
-        <mat-form-field class="example-full-width">
-          <mat-label>Subject</mat-label>
-          <mat-select formControlName="subject">
-            <mat-option></mat-option>
-            @for (subject of subjectList; track subject._id) {
+      <mat-form-field class="example-full-width">
+        <mat-label>Subject</mat-label>
+        <mat-select formControlName="subject">
+          <mat-option></mat-option>
+          @for (subject of subjectList; track subject._id) {
             <mat-option [value]="subject">{{ subject.title }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+          }
+        </mat-select>
+      </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <mat-label>Leave a remark</mat-label>
-          <textarea formControlName="remark" matInput></textarea>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
         <button
           (click)="onSubmit()"
-          [disabled]="!firstFormGroup.valid && !secondFormGroup.valid"
+          [disabled]="!firstFormGroup.valid"
 
           color="primary"
           mat-stroked-button
@@ -66,6 +30,6 @@
           Add an assignment
         </button>
       </div>
-    </mat-step>
-  </mat-stepper>
+    </form>
+  </mat-card>
 </div>

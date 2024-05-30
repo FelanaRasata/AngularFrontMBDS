@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule } from '@angular/material/icon'
-import { MatSidenavModule } from '@angular/material/sidenav'
-import { SidebarComponent } from './sidebar/sidebar.component'
-import { FooterComponent } from './footer/footer.component'
-import { MatListItem, MatNavList } from '@angular/material/list'
-import { RouterOutlet } from '@angular/router'
-import { SharedService } from '../shared/services/shared.service'
-import { Subscription } from 'rxjs'
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {MatToolbarModule} from '@angular/material/toolbar'
+import {MatButtonModule} from '@angular/material/button'
+import {MatIconModule} from '@angular/material/icon'
+import {MatSidenavModule} from '@angular/material/sidenav'
+import {SidebarComponent} from './sidebar/sidebar.component'
+import {FooterComponent} from './footer/footer.component'
+import {MatListItem, MatNavList} from '@angular/material/list'
+import {RouterOutlet} from '@angular/router'
+import {SharedService} from '../shared/services/shared.service'
+import {Subscription} from 'rxjs'
 
 
 @Component({
@@ -25,8 +25,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   isMobile!: boolean
   private subscription!: Subscription
 
-
-  constructor(private sharedService: SharedService) {
+  constructor(
+    private sharedService: SharedService,
+  ) {
   }
 
 
@@ -37,10 +38,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
+  ngOnDestroy()
+    :
+    void {
+    if (this.subscription
+    ) {
       this.subscription.unsubscribe()
     }
   }
+
 
 }

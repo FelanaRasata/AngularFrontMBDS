@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core'
-import { MatSnackBar } from '@angular/material/snack-bar'
-import { IResponseType } from '../utils/interface'
-import { Router } from '@angular/router'
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {Injectable} from '@angular/core'
+import {MatSnackBar} from '@angular/material/snack-bar'
+import {IResponseType} from '../utils/interface'
+import {Router} from '@angular/router'
 
 
 @Injectable({
@@ -16,14 +15,18 @@ export class SnackbarService {
   }
 
 
-  action(response: IResponseType<any>, link: string) {
+  action(response: IResponseType<any>, link: string, message: string = '') {
+
 
     if (response.status == 204 || response.status == 200 || response.status == 201) {
 
-      this.router.navigate([link], { state: { message: response.message } })
+      this.router.navigate([link], {
+        state: {
+          message: message != '' ? message : response.message
+        }
+      })
 
     }
-    console.log("error" , response)
 
     if (response.status == 400 || response.status == 404) {
       this.showAlert(response.message, 'Close')

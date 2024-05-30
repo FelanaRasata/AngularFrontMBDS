@@ -7,6 +7,8 @@ import { EditAssignmentComponent } from './pages/assignment/edit-assignment/edit
 import { BackAssignmentComponent } from './pages/assignment/back-assignment/back-assignment.component'
 import { SignInComponent } from './pages/user/sign-in/sign-in.component'
 import {authGuard} from "./shared/guards/auth.guard";
+import {teacherGuard} from "./shared/guards/teacher.guard";
+import {studentGuard} from "./shared/guards/student.guard";
 
 
 export const routes: Routes = [
@@ -32,6 +34,7 @@ export const routes: Routes = [
       },
       {
         path: 'add',
+        canActivate: [studentGuard],
         component: AddAssignmentComponent,
       },
       {
@@ -41,11 +44,12 @@ export const routes: Routes = [
       },
       {
         path: ':id/edit',
+        canActivate: [teacherGuard],
         component: EditAssignmentComponent,
-        // canActivate: [authGuard]
       },
       {
         path: 'back',
+        canActivate: [teacherGuard],
         component: BackAssignmentComponent,
       },
       {

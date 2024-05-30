@@ -34,20 +34,24 @@ export class AuthService {
     return token.slice(-2)
   }
 
-  isLogged() {
+  isLogged(): Promise<boolean> {
 
-    const promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       resolve(this.getToken() != "");
     });
-
-    return promise;
   }
 
-  isAuthorized(role: string): boolean {
-
+  isAuthorized(role: string): Promise<boolean> {
     const roleIndex = this.getAuthorization()
     const roleValue = Role[roleIndex as keyof typeof Role];
-    return role == roleValue;
 
+    return new Promise((resolve, reject) => {
+      resolve(role == roleValue);
+    });
+
+  }
+
+  signOut(){
+    localStorage.removeItem('token')
   }
 }

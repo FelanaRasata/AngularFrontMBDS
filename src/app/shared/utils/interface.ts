@@ -1,51 +1,41 @@
 export interface IResponseType<T> {
 
-  status: number;
+  status: number
 
-  message: string;
+  message: string
 
-  data?: T;
+  data?: T
 
 }
 
 
 export interface PaginationResult<T> {
 
-  docs: T;
+  items?: T
 
-  totalDocs: number;
-
-  totalPages: number;
-
-  currentPage: number;
-
-  hasNextPage: boolean;
-
-  hasPrevPage: boolean;
-
-  nextPage: number | null;
-
-  prevPage: number | null;
+  paginator: Paginator
 
 }
 
 
 export interface Paginator {
 
-  size: number;
+  totalItems: number
 
-  totalDocs: number;
+  itemsPerPage: number
 
-  totalPages: number;
+  page: number
 
-  currentPage: number;
+  totalPages: number
 
-  hasNextPage: boolean;
+  pagingCounter: number
 
-  hasPrevPage: boolean;
+  hasPrevPage: boolean
 
-  nextPage: number | null;
+  hasNextPage: boolean
 
-  prevPage: number | null;
+  prevPage: boolean | null
+
+  nextPage: boolean | null
 
 }

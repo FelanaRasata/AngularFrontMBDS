@@ -7,7 +7,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   const authService = inject(AuthService);
 
-  const token = authService.getToken()
+  const token = "Bearer " + authService.getToken()
 
   if (token) {
 

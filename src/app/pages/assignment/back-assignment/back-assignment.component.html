@@ -1,3 +1,4 @@
+<!--
 <div>
   <app-title-page [title]="title"></app-title-page>
 
@@ -8,11 +9,11 @@
       <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport" #scrollerToBeConfirmed>
         <h2>To Confirm</h2>
         <div
-          [cdkDropListData]="assignmentsToBeConfirmed.docs"
+          [cdkDropListData]="assignmentsToBeConfirmed.items"
           cdkDropList
           class="example-list">
-          <!--        (cdkDropListDropped)="drop($event)">-->
-          @for (assignment of assignmentsToBeConfirmed.docs; track assignment) {
+          &lt;!&ndash;        (cdkDropListDropped)="drop($event)">&ndash;&gt;
+          @for (assignment of assignmentsToBeConfirmed.items; track assignment) {
             <div class="example-box" cdkDrag>
               <app-item-assignment [assignment]="assignment"></app-item-assignment>
             </div>
@@ -27,10 +28,10 @@
 
         <div
           (cdkDropListDropped)="drop($event)"
-          [cdkDropListData]="assignmentsConfirmed.docs"
+          [cdkDropListData]="assignmentsConfirmed.items"
           cdkDropList
           class="example-list">
-          @for (assignment of assignmentsConfirmed.docs; track assignment) {
+          @for (assignment of assignmentsConfirmed.items; track assignment) {
             <div class="example-box" cdkDrag>
               <app-item-assignment [assignment]="assignment"></app-item-assignment>
             </div>
@@ -41,3 +42,4 @@
   </div>
 
 </div>
+-->

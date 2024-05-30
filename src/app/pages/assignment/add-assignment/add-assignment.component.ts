@@ -16,6 +16,7 @@ import { provideNativeDateAdapter } from '@angular/material/core'
 import { TitlePageComponent } from '../../components/title-page/title-page.component'
 import { Assignment } from '../../../shared/model/assignment.model'
 import { SnackbarService } from '../../../shared/services/snackbar.service'
+import {MatCardModule} from "@angular/material/card";
 
 
 @Component({
@@ -32,22 +33,19 @@ import { SnackbarService } from '../../../shared/services/snackbar.service'
     MatDatepickerModule,
     MatSelectModule,
     TitlePageComponent,
+    MatCardModule
   ],
   templateUrl: './add-assignment.component.html',
   styleUrl: './add-assignment.component.css'
 })
 export class AddAssignmentComponent implements OnInit, OnDestroy {
-  title = 'Edit assignment'
+  title = 'Add assignment'
 
   // champs du formulaire
   firstFormGroup = this._formBuilder.group({
     title: ['', Validators.required],
-    dateSending: [undefined, Validators.required],
-  })
-
-  secondFormGroup = this._formBuilder.group({
     subject: [undefined, Validators.required],
-    remark: ['',],
+
   })
 
   subjectList: Subject[] = []
@@ -93,25 +91,27 @@ export class AddAssignmentComponent implements OnInit, OnDestroy {
     // on crée un nouvel assignment
     let newAssignment = new Assignment()
 
-    // on genere un id aléatoire (plus tard ce sera fait coté serveur par
-    // une base de données)
     newAssignment.title = this.firstFormGroup.value.title!
-    newAssignment.dateSending = this.firstFormGroup.value.dateSending!
-    newAssignment.subject = this.secondFormGroup.value.subject!
-    newAssignment.remark = this.secondFormGroup.value.remark!
+    newAssignment.subject = this.firstFormGroup.value.subject!
+    newAssignment.remark = ""
 
     newAssignment.confirm = false
     newAssignment.score = 0
 
+    console.log(JSON.stringify(newAssignment))
+
 
     // on utilise le service pour directement ajouter
     // le nouvel assignment dans le tableau
-    this.assignmentService
+    /*this.assignmentService
       .addAssignment(newAssignment)
       .subscribe((reponse) => {
 
-        this.snackbarService.action(reponse, '/assignment/1/detail')
+        let link = ""
+        if (reponse.status == 201) link = '/assignment/'+ reponse.data?._id +'/detail'
 
-      })
+        this.snackbarService.action(reponse, link, "Assignment Created")
+
+      })*/
   }
 }
