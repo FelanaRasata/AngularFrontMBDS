@@ -12,7 +12,6 @@
           [cdkDropListData]="assignmentService.notConfirmedAssignments.value"
           cdkDropList
           class="example-list">
-          <!--        (cdkDropListDropped)="drop($event)">-->
           @for (assignment of assignmentService.notConfirmedAssignments.value; track assignment) {
           <div class="example-box" cdkDrag>
             <app-item-assignment [assignment]="assignment"></app-item-assignment>
@@ -33,7 +32,7 @@
           cdkDropList
           class="example-list">
           @for (assignment of assignmentService.confirmedAssignments.value; track assignment) {
-          <div class="example-box" cdkDrag>
+          <div class="example-box" cdkDrag  >
             <app-item-assignment [assignment]="assignment"></app-item-assignment>
           </div>
           }

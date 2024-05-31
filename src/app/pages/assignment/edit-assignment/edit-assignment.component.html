@@ -71,7 +71,7 @@
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button
-          [disabled]="this.sentAssignment.confirm"
+          [disabled]="this.assignmentService.assignment.value?.confirm"
           color="primary"
 
           mat-stroked-button

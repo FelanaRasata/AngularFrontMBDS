@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core'
-import { BehaviorSubject, Observable, of } from 'rxjs'
-import { IPaginationData, IPaginationResult, IResponseType } from '../types/interfaces'
-import { baseUrl, isEmpty } from '../utils/utils'
-import { IAssignment } from '../models/entities/assignment.model'
-import { ApiService } from '@shared/core/services/api.service'
-import { PaginationService } from '@shared/core/services/pagination.service'
+import {Injectable} from '@angular/core'
+import {BehaviorSubject, catchError, Observable, throwError} from 'rxjs'
+import {IPaginationData, IPaginationResult, IResponseType} from '../types/interfaces'
+import {baseUrl, isEmpty} from '../utils/utils'
+import {IAssignment} from '../models/entities/assignment.model'
+import {ApiService} from '@shared/core/services/api.service'
+import {PaginationService} from '@shared/core/services/pagination.service'
+import {HttpErrorResponse} from "@angular/common/http";
+import {EAssignmentLink} from "@shared/core/types/enums";
+import {Router} from "@angular/router";
+import {SnackbarService} from "@shared/core/services/snackbar.service";
 
 
 @Injectable({
@@ -13,6 +17,8 @@ import { PaginationService } from '@shared/core/services/pagination.service'
 export class AssignmentService {
 
   endpoint: string = 'assignments'
+
+  assignment: BehaviorSubject<IAssignment | null> = new BehaviorSubject<IAssignment | null>(null)
 
   assignments: BehaviorSubject<IAssignment[]> = new BehaviorSubject<IAssignment[]>([])
   confirmedAssignments: BehaviorSubject<IAssignment[]> = new BehaviorSubject<IAssignment[]>([])
@@ -40,6 +46,8 @@ export class AssignmentService {
   constructor(
     private apiService: ApiService,
     private paginationService: PaginationService,
+    private router: Router,
+    private snackbarService: SnackbarService
   ) {
   }
 
@@ -54,6 +62,8 @@ export class AssignmentService {
 
     if (!isEmpty(confirmed))
       uri += '&confirmed=' + confirmed
+
+    console.log(uri)
 
     return new Observable<string | null>((subscriber) => {
 
@@ -97,6 +107,9 @@ export class AssignmentService {
     return new Observable<string | null>((subscriber) => {
 
       this.apiService.get<IPaginationResult<IAssignment[]>>(baseUrl(uri))
+        .pipe(
+          catchError((error: HttpErrorResponse) => this.handleError(error))
+        )
         .subscribe((response) => {
 
           if (response.status === 200) {
@@ -121,38 +134,103 @@ export class AssignmentService {
 
 
   // renvoie un assignment par son id, renvoie undefined si pas trouvé
-  getAssignment(_id: string): Observable<IResponseType<IAssignment>> {
+  getAssignment(_id: string): Observable<string | null> {
 
     const uri = this.endpoint + '/' + _id
-    return this.apiService.get<IAssignment>(baseUrl(uri))
+
+    return new Observable<string | null>((subscriber) => {
+
+      this.apiService.get<IAssignment>(baseUrl(uri))
+        .pipe(
+          catchError((error: HttpErrorResponse) => this.handleError(error))
+        )
+        .subscribe((response) => {
+
+          if (response.status === 200) {
+
+            this.assignment.next(response.data)
+            subscriber.next(null)
+
+          } else {
+
+            subscriber.next(response.message)
+
+          }
+
+          subscriber.complete()
+
+        })
+
+    })
 
   }
 
 
   // On a l'ID de l'assignment s'il est bien modifié
-  updateAssignment(assignment: IAssignment): Observable<IResponseType<null>> {
+  updateAssignment(assignment: IAssignment): Observable<string | null> {
 
     const uri = this.endpoint + '/' + assignment._id
-    return this.apiService.put<null>(baseUrl(uri), assignment)
+
+    return new Observable<string | null>((subscriber) => {
+
+      this.apiService.put<null>(baseUrl(uri), assignment)
+        .pipe(
+          catchError((error: HttpErrorResponse) => this.handleError(error))
+        )
+        .subscribe((response) => {
+
+          if (response.status === 204) {
+
+            this.assignment.next(null)
+            subscriber.next(null)
+
+          } else {
+
+            subscriber.next(response.message)
+
+          }
+
+          subscriber.complete()
+
+        })
+
+    })
 
   }
 
 
   // ajoute un assignment et retourne une confirmation
-  addAssignment(assignment: IAssignment): Observable<IResponseType<IAssignment>> {
+  addAssignment(assignment: IAssignment): Observable<string | null> {
 
-    /*
-        const uri = this.base_api;
-        return this.http.post<IResponseType<Assignment>>(baseUrl(uri), assignment);
-     */
-    const iResponseType: IResponseType<IAssignment> = {
-      status: assignment ? 201 : 404,
-      message: 'success',
-      data: assignment,
-    }
 
-    return of(iResponseType)
+    // return this.http.post<IResponseType<Assignment>>(baseUrl(uri), assignment);
 
+    const uri = this.endpoint
+
+    return new Observable<string | null>((subscriber) => {
+
+      this.apiService.post<null>(baseUrl(uri), assignment)
+        .pipe(
+          catchError((error: HttpErrorResponse) => this.handleError(error))
+        )
+        .subscribe((response) => {
+
+          if (response.status === 201) {
+
+            this.assignment.next(response.data!)
+            subscriber.next(null)
+
+          } else {
+
+            subscriber.next(response.message)
+
+          }
+
+          subscriber.complete()
+
+        })
+
+    })
   }
 
 
@@ -163,6 +241,29 @@ export class AssignmentService {
     const uri = this.endpoint + '/' + idAssignment
     return this.apiService.delete<null>(baseUrl(uri))
 
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = '';
+
+    if (error.status == 401) {
+      // Client-side or network error
+      this.router.navigate([EAssignmentLink.root], {
+        state: {
+          message: "Session expired"
+        }
+      })
+
+    } else {
+      // Backend error
+      this.snackbarService.showAlert(`Server returned code: ${error.status}, error message is: ${error.message}`);
+    }
+
+    // Log the error to the console (you can also log it to a remote server)
+    console.error(errorMessage);
+
+    // Return an observable with a user-facing error message
+    return throwError(() => new Error(errorMessage));
   }
 
 

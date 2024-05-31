@@ -1,21 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { MatInputModule } from '@angular/material/input'
-import { MatButtonModule } from '@angular/material/button'
-import { MatStepperModule } from '@angular/material/stepper'
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { Subscription } from 'rxjs'
-import { MatSelectModule } from '@angular/material/select'
-import { MatDatepickerModule } from '@angular/material/datepicker'
-import { provideNativeDateAdapter } from '@angular/material/core'
-import { TitlePageComponent } from '@shared/components/title-page/title-page.component'
-import { MatCardModule } from '@angular/material/card'
-import { SharedService } from '@shared/core/services/shared.service'
-import { AssignmentService } from '@shared/core/services/assignment.service'
-import { SubjectService } from '@shared/core/services/subject.service'
-import { SnackbarService } from '@shared/core/services/snackbar.service'
-import { IAssignment } from '@shared/core/models/entities/assignment.model'
-import { ISubject } from '@shared/core/models/entities/subject.model'
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {MatInputModule} from '@angular/material/input'
+import {MatButtonModule} from '@angular/material/button'
+import {MatStepperModule} from '@angular/material/stepper'
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms'
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {Subscription} from 'rxjs'
+import {MatSelectModule} from '@angular/material/select'
+import {MatDatepickerModule} from '@angular/material/datepicker'
+import {provideNativeDateAdapter} from '@angular/material/core'
+import {TitlePageComponent} from '@shared/components/title-page/title-page.component'
+import {MatCardModule} from '@angular/material/card'
+import {SharedService} from '@shared/core/services/shared.service'
+import {AssignmentService} from '@shared/core/services/assignment.service'
+import {SubjectService} from '@shared/core/services/subject.service'
+import {SnackbarService} from '@shared/core/services/snackbar.service'
+import {IAssignment} from '@shared/core/models/entities/assignment.model'
+import {ISubject} from '@shared/core/models/entities/subject.model'
+import {EAssignmentLink} from "@shared/core/types/enums";
 
 
 @Component({
@@ -104,12 +105,12 @@ export class AddAssignmentComponent implements OnInit, OnDestroy {
     // le nouvel assignment dans le tableau
     this.assignmentService
       .addAssignment(newAssignment)
-      .subscribe((response) => {
+      .subscribe((message) => {
 
-        console.log(response)
+        const link = "/assignment/" + this.assignmentService.assignment.value?._id + "/detail"
 
 
-        this.snackbarService.action(response, '/assignment/list/1/20', 'Assignment Created')
+        this.snackbarService.action(message, link, 'Assignment Created')
 
       })
 

@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core'
-import { CardAssignmentComponent } from './card-assignment/card-assignment.component'
-import { MatDividerModule } from '@angular/material/divider'
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule } from '@angular/material/icon'
-import { NavigationEnd, Router, RouterModule } from '@angular/router'
-import { TitlePageComponent } from '@shared/components/title-page/title-page.component'
-import { IPaginationResult } from '@shared/core/types/interfaces'
-import { IAssignment } from '@shared/core/models/entities/assignment.model'
-import { SnackbarService } from '@shared/core/services/snackbar.service'
-import { AssignmentService } from '@shared/core/services/assignment.service'
-import { AuthService } from '@shared/core/services/auth.service'
-import { EUserRole } from '@shared/core/types/enums'
-import { isEmpty } from '@shared/core/utils/utils'
+import {Component, OnInit} from '@angular/core'
+import {CardAssignmentComponent} from './card-assignment/card-assignment.component'
+import {MatDividerModule} from '@angular/material/divider'
+import {MatButtonModule} from '@angular/material/button'
+import {MatIconModule} from '@angular/material/icon'
+import {NavigationEnd, Router, RouterModule} from '@angular/router'
+import {TitlePageComponent} from '@shared/components/title-page/title-page.component'
+import {IPaginationResult} from '@shared/core/types/interfaces'
+import {IAssignment} from '@shared/core/models/entities/assignment.model'
+import {SnackbarService} from '@shared/core/services/snackbar.service'
+import {AssignmentService} from '@shared/core/services/assignment.service'
+import {AuthService} from '@shared/core/services/auth.service'
+import {EAssignmentLink, EUserRole} from '@shared/core/types/enums'
+import {isEmpty} from '@shared/core/utils/utils'
+import {PaginatorPageComponent} from "@shared/components/paginator-page/paginator-page.component";
 
 
 @Component({
@@ -23,7 +24,8 @@ import { isEmpty } from '@shared/core/utils/utils'
     MatDividerModule,
     MatIconModule,
     RouterModule,
-    TitlePageComponent
+    TitlePageComponent,
+    PaginatorPageComponent
   ],
   templateUrl: './list-assignment.component.html',
   styleUrl: './list-assignment.component.css'
@@ -37,7 +39,7 @@ export class ListAssignmentComponent implements OnInit {
   limit = 20
 
   disabledAdd = true
-
+  protected readonly EAssignmentLink = EAssignmentLink;
 
   constructor(
     private router: Router,
@@ -46,7 +48,6 @@ export class ListAssignmentComponent implements OnInit {
     private authService: AuthService
   ) {
   }
-
 
   ngOnInit() {
 
@@ -68,6 +69,8 @@ export class ListAssignmentComponent implements OnInit {
     this.assignmentService.getAssignmentList(this.page, this.limit)
       .subscribe(message => {
 
+        console.log("message : ", message)
+
         if (!isEmpty(message))
           this.snackbarService.showAlert(String(message))
 
@@ -78,6 +81,4 @@ export class ListAssignmentComponent implements OnInit {
     })
 
   }
-
-
 }

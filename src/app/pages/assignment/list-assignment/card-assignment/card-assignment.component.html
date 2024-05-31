@@ -8,13 +8,13 @@
         <mat-card-title-group>
           <mat-card-title>
             @if (assignment.confirm) {
-            <mat-icon>assignment</mat-icon>
+              <mat-icon>assignment_turned_in</mat-icon>
             } @else {
-            <mat-icon>assignment_turned_in</mat-icon>
+              <mat-icon>assignment</mat-icon>
             }
             {{ assignment.title }}
           </mat-card-title>
-          <mat-card-subtitle>{{assignment.subject.title}} | {{ assignment.dateSending | date }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ assignment.subject.title }} | {{ assignment.dateSending | date }}</mat-card-subtitle>
         </mat-card-title-group>
         <div>
           <br>

@@ -43,6 +43,8 @@ export class PaginatorPageComponent {
 
 
   ngAfterViewInit() {
+
+    console.log(this.paginator)
   }
 
 

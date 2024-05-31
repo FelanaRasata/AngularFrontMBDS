@@ -4,33 +4,33 @@
   <mat-card [class.example-card-mobile]="isMobile" class="example-card">
     <mat-card-content class="card-content">
       <div class="img">
-        <img [src]="assignmentSent?.subject?.image" mat-card-xl-image>
+        <img [src]="assignmentService.assignment.value?.subject?.image" mat-card-xl-image>
       </div>
       <div class="list">
         <mat-card-title-group>
-          <mat-card-title>{{ assignmentSent?.title }}</mat-card-title>
-          <mat-card-subtitle>{{ assignmentSent?.subject?.title }}</mat-card-subtitle>
+          <mat-card-title>{{ assignmentService.assignment.value?.title }}</mat-card-title>
+          <mat-card-subtitle>{{ assignmentService.assignment.value?.subject?.title }}</mat-card-subtitle>
         </mat-card-title-group>
         <li>
           <span class="label" matListItemTitle>Student</span>
-          <span class="row" matListItemLine>{{ assignmentSent?.student?.name }}</span>
+          <span class="row" matListItemLine>{{ assignmentService.assignment.value?.student?.name }}</span>
         </li>
         <li>
           <span class="label" matListItemTitle>Date Sending</span>
-          <span class="row" matListItemLine>{{ assignmentSent?.dateSending | date }}</span>
+          <span class="row" matListItemLine>{{ assignmentService.assignment.value?.dateSending | date }}</span>
         </li>
         <li>
           <span class="label" matListItemTitle>Score</span>
-          <span class="row" matListItemLine>{{ assignmentSent?.score | number }}</span>
+          <span class="row" matListItemLine>{{ assignmentService.assignment.value?.score | number }}</span>
         </li>
         <li>
           <span class="label" matListItemTitle>Remark</span>
-          <span class="row" matListItemLine>{{ assignmentSent?.remark }}</span>
+          <span class="row" matListItemLine>{{ assignmentService.assignment.value?.remark }}</span>
         </li>
         <li>
           <span class="label" matListItemTitle>Confirmed</span>
           <span class="row" matListItemLine>
-              @if (assignmentSent?.confirm) {
+              @if (assignmentService.assignment.value?.confirm) {
             <mat-icon>assignment_turned_in</mat-icon>
               } @else {
             <mat-icon>assignment</mat-icon>
@@ -42,7 +42,7 @@
     <mat-card-actions align="end">
       <button (click)="openDialog()" [disabled]="disabledButtons" color="warn" mat-button>DELETE</button>
       <button [disabled]="disabledButtons" color="basic" mat-button
-              routerLink='/assignment/{{assignmentSent?._id}}/edit'>EDIT
+              routerLink='/assignment/{{assignmentService.assignment.value?._id}}/edit'>EDIT
       </button>
     </mat-card-actions>
   </mat-card>

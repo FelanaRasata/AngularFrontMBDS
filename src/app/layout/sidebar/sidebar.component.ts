@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { SignOutComponent } from '@pages/user/sign-out/sign-out.component'
 import { AuthService } from '@shared/core/services/auth.service'
-import { EUserRole } from '@shared/core/types/enums'
+import {EAssignmentLink, EUserRole} from '@shared/core/types/enums'
 
 
 @Component({
@@ -47,7 +47,7 @@ export class SidebarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.authService.signOut()
-        this.router.navigate(['/'], {
+        this.router.navigate([EAssignmentLink.root], {
           state: {
             message: 'You logged out 😥',
           }
@@ -55,4 +55,6 @@ export class SidebarComponent implements OnInit {
       }
     })
   }
+
+    protected readonly EAssignmentLink = EAssignmentLink;
 }

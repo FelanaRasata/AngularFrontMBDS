@@ -2,7 +2,7 @@
   <p>What's score for this assignment?</p>
   <mat-form-field>
     <mat-label>Score</mat-label>
-    <input [(ngModel)]="data" matInput>
+    <input type="number" [(ngModel)]="data" matInput min="0" max="20">
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>

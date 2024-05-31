@@ -16,6 +16,12 @@
       From :  {{ assignment.student?.name }}
       <br>
       <i>&commat;{{ assignment.student?.name }}</i>
+
+      @if (assignment.confirm) {
+        <br>
+        Score : {{ assignment.score }}
+      }
+
     </div>
     <img [src]="assignment.subject.image" class="sm-image">
   </div>

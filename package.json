@@ -4,8 +4,8 @@
   "scripts": {
     "start:dev": "ng serve",
     "start:prod": "node server.js",
-    "start:setup": "npm isntall --verbose",
-    "build": "ng build",
+    "start:setup": "npm install --verbose",
+    "build": "npm install --verbose && ng build",
     "build:watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

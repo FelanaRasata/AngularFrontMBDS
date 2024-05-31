@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { TitlePageComponent } from '@shared/components/title-page/title-page.component'
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core'
+import {TitlePageComponent} from '@shared/components/title-page/title-page.component'
 import {
   CdkDrag,
   CdkDragDrop,
@@ -9,17 +9,16 @@ import {
   moveItemInArray,
   transferArrayItem
 } from '@angular/cdk/drag-drop'
-import { ItemAssignmentComponent } from './item-assignment/item-assignment.component'
-import { Subscription } from 'rxjs'
-import { MatDialog } from '@angular/material/dialog'
-import { ConfirmAssignmentComponent } from './confirm-assignment/confirm-assignment.component'
-import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling'
-import { IPaginationResult } from '@shared/core/types/interfaces'
-import { IAssignment } from '@shared/core/models/entities/assignment.model'
-import { SharedService } from '@shared/core/services/shared.service'
-import { AssignmentService } from '@shared/core/services/assignment.service'
-import { SnackbarService } from '@shared/core/services/snackbar.service'
-import { isEmpty } from '@shared/core/utils/utils'
+import {ItemAssignmentComponent} from './item-assignment/item-assignment.component'
+import {map, Subscription} from 'rxjs'
+import {MatDialog} from '@angular/material/dialog'
+import {ConfirmAssignmentComponent} from './confirm-assignment/confirm-assignment.component'
+import {CdkVirtualScrollViewport, ScrollingModule} from '@angular/cdk/scrolling'
+import {IAssignment} from '@shared/core/models/entities/assignment.model'
+import {SharedService} from '@shared/core/services/shared.service'
+import {AssignmentService} from '@shared/core/services/assignment.service'
+import {SnackbarService} from '@shared/core/services/snackbar.service'
+import {isEmpty} from '@shared/core/utils/utils'
 
 
 @Component({
@@ -36,7 +35,6 @@ import { isEmpty } from '@shared/core/utils/utils'
   ],
   templateUrl: './back-assignment.component.html',
   styleUrl: './back-assignment.component.css',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -83,15 +81,6 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
 
       })
 
-    /*this.assignmentService.getAssignmentList(this.page, this.size).subscribe(
-      (response) => {
-
-        if (response.status == 200) {
-          this.assignmentsConfirmed = response.data!
-          this.assignmentsToBeConfirmed = response.data!
-        } else
-          this.snackbarService.showAlert(response.message)
-      })*/
 
   }
 
@@ -100,6 +89,27 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
 
     if (!this.scrollerConfirmed && !this.scrollerToBeConfirmed) return
 
+    this.scrollerConfirmed.elementScrolled()
+      .pipe(
+        map(event => {
+          return this.scrollerConfirmed.measureScrollOffset("bottom")
+        })
+      )
+      .subscribe(distance => {
+          console.log("scrollerConfirmed")
+        }
+      )
+
+    this.scrollerToBeConfirmed.elementScrolled()
+      .pipe(
+        map(event => {
+          return this.scrollerConfirmed.measureScrollOffset("bottom")
+        })
+      )
+      .subscribe(distance => {
+          console.log("scrollerToBeConfirmed")
+        }
+      )
   }
 
 
@@ -116,14 +126,28 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
       })
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`)
-        if (result) {
+        if (result != undefined && result != 0) {
+          console.log(`Dialog result: ${result}`)
+
           transferArrayItem(
             event.previousContainer.data,
             event.container.data!,
             event.previousIndex,
             event.currentIndex,
           )
+
+          let assignment = event.container.data[event.currentIndex]
+          assignment.confirm = true
+          assignment.score = result
+
+          this.assignmentService.updateAssignment(assignment).subscribe((message) => {
+            if (!isEmpty(message))
+              this.snackbarService.showAlert(String(message))
+            else
+              this.snackbarService.showAlert("Assignment successfully updated")
+
+          })
+
         }
       })
 

@@ -1,8 +1,8 @@
 <mat-nav-list>
-  <a [routerLink]="['/assignment/list/1/20']" class="my-nav-item" mat-list-item>
+  <a [routerLink]="[EAssignmentLink.list]" class="my-nav-item" mat-list-item>
     Assignment List
   </a>
-  <a [disabled]="disabled" [routerLink]="['/assignment/back']" class="my-nav-item" mat-list-item>
+  <a [disabled]="disabled" [routerLink]="[EAssignmentLink.add]" class="my-nav-item" mat-list-item>
     Update Assignments
   </a>
   <a (click)="openDialog()" class="my-nav-item" mat-list-item>

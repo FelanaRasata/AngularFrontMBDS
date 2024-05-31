@@ -1,7 +1,7 @@
 <div class="container">
   <app-title-page [title]="title"></app-title-page>
   <div class="my-add-button">
-    <button [disabled]="disabledAdd" [routerLink]="['/assignment/add']" color="warn" extended mat-fab>
+    <button [disabled]="disabledAdd" [routerLink]=[EAssignmentLink.add] color="warn" extended mat-fab>
       <mat-icon>add</mat-icon>
       Add Assignment
     </button>
@@ -10,5 +10,7 @@
   @for (assignment of assignmentService.assignments.value; track assignment) {
   <app-card-assignment [assignment]="assignment"></app-card-assignment>
   }
+
+  <app-paginator-page></app-paginator-page>
 </div>
 

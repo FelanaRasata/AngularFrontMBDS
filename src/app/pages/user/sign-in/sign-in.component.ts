@@ -1,19 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { MatRadioModule } from '@angular/material/radio'
-import { CommonModule } from '@angular/common'
-import { FormsModule } from '@angular/forms'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule } from '@angular/material/icon'
-import { MatCardModule } from '@angular/material/card'
-import { Subscription } from 'rxjs'
-import { NavigationEnd, Router } from '@angular/router'
-import { EUserRole } from '@shared/core/types/enums'
-import { UserService } from '@shared/core/services/user.service'
-import { SharedService } from '@shared/core/services/shared.service'
-import { SnackbarService } from '@shared/core/services/snackbar.service'
-import { AuthService } from '@shared/core/services/auth.service'
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {MatRadioModule} from '@angular/material/radio'
+import {CommonModule} from '@angular/common'
+import {FormsModule} from '@angular/forms'
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatInputModule} from '@angular/material/input'
+import {MatButtonModule} from '@angular/material/button'
+import {MatIconModule} from '@angular/material/icon'
+import {MatCardModule} from '@angular/material/card'
+import {Subscription} from 'rxjs'
+import {NavigationEnd, Router} from '@angular/router'
+import {EAssignmentLink, EUserRole} from '@shared/core/types/enums'
+import {UserService} from '@shared/core/services/user.service'
+import {SharedService} from '@shared/core/services/shared.service'
+import {SnackbarService} from '@shared/core/services/snackbar.service'
+import {AuthService} from '@shared/core/services/auth.service'
 
 
 @Component({
@@ -93,10 +93,13 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.userService.signIn(this.username, this.password, this.role)
       .subscribe((response) => {
 
-        if (response.status == 201)
+        let message = response.message
+        if (response.status == 201) {
           this.authService.setToken(response.data)
+          message = ""
+        }
 
-        this.snackbarService.action(response, '/assignment/list/1/10')
+        this.snackbarService.action(message, EAssignmentLink.list)
 
       })
 
