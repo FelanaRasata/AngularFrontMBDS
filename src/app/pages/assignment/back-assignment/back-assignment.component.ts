@@ -123,7 +123,10 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
 
     } else {
 
-      let assignment = event.container.data[event.currentIndex]
+      let assignment = event.previousContainer.data[event.previousIndex]
+
+
+      console.log(assignment)
 
       const dialogRef = this.dialog.open(ConfirmAssignmentComponent, {
         data: { score : assignment.score, remark: assignment.remark },
