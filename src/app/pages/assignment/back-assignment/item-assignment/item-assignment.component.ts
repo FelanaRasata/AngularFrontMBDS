@@ -7,18 +7,20 @@ import { IAssignment } from '@shared/core/models/entities/assignment.model'
 import { DatePipe } from '@angular/common'
 import {Subscription} from "rxjs";
 import {SharedService} from "@shared/core/services/shared.service";
+import {MatIcon} from "@angular/material/icon";
 
 
 @Component({
   selector: 'app-item-assignment',
   standalone: true,
-  imports: [
-    MatCardModule,
-    MatButton,
-    RouterLink,
-    MatExpansionModule,
-    DatePipe
-  ],
+    imports: [
+        MatCardModule,
+        MatButton,
+        RouterLink,
+        MatExpansionModule,
+        DatePipe,
+        MatIcon
+    ],
   templateUrl: './item-assignment.component.html',
   styleUrl: './item-assignment.component.css'
 })
