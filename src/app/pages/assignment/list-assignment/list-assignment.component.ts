@@ -3,7 +3,7 @@ import {CardAssignmentComponent} from './card-assignment/card-assignment.compone
 import {MatDividerModule} from '@angular/material/divider'
 import {MatButtonModule} from '@angular/material/button'
 import {MatIconModule} from '@angular/material/icon'
-import {NavigationEnd, Router, RouterModule} from '@angular/router'
+import {ActivatedRoute, NavigationEnd, Router, RouterModule} from '@angular/router'
 import {TitlePageComponent} from '@shared/components/title-page/title-page.component'
 import {IPaginationResult} from '@shared/core/types/interfaces'
 import {IAssignment} from '@shared/core/models/entities/assignment.model'
@@ -34,10 +34,6 @@ export class ListAssignmentComponent implements OnInit {
 
   title = 'List of assignment'
 
-  assignmentList!: IPaginationResult<IAssignment[]>
-  page = 0
-  limit = 20
-
   disabledAdd = true
   protected readonly EAssignmentLink = EAssignmentLink;
 
@@ -45,7 +41,8 @@ export class ListAssignmentComponent implements OnInit {
     private router: Router,
     private snackbarService: SnackbarService,
     public assignmentService: AssignmentService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute,
   ) {
   }
 
@@ -66,10 +63,11 @@ export class ListAssignmentComponent implements OnInit {
 
     })
 
-    this.assignmentService.getAssignmentList(this.page, this.limit)
-      .subscribe(message => {
+    const page = this.route.snapshot.params['page']
+    const limit = this.route.snapshot.params['limit']
 
-        console.log("message : ", message)
+    this.assignmentService.getAssignmentList(page, limit)
+      .subscribe(message => {
 
         if (!isEmpty(message))
           this.snackbarService.showAlert(String(message))
@@ -80,5 +78,16 @@ export class ListAssignmentComponent implements OnInit {
       this.disabledAdd = !role
     })
 
+  }
+
+  scrollToTop(): void {
+    console.log(document.documentElement.style)
+    if ('scrollBehavior' in document.documentElement.style) {
+      console.log(1)
+      window.scroll({ top: 0, behavior: 'smooth' });
+    } else {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
   }
 }

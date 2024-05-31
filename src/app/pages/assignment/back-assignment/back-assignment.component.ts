@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core'
+import {AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core'
 import {TitlePageComponent} from '@shared/components/title-page/title-page.component'
 import {
   CdkDrag,
@@ -10,7 +10,7 @@ import {
   transferArrayItem
 } from '@angular/cdk/drag-drop'
 import {ItemAssignmentComponent} from './item-assignment/item-assignment.component'
-import {map, Subscription} from 'rxjs'
+import {filter, map, pairwise, Subscription, throttleTime} from 'rxjs'
 import {MatDialog} from '@angular/material/dialog'
 import {ConfirmAssignmentComponent} from './confirm-assignment/confirm-assignment.component'
 import {CdkVirtualScrollViewport, ScrollingModule} from '@angular/cdk/scrolling'
@@ -35,13 +35,16 @@ import {isEmpty} from '@shared/core/utils/utils'
   ],
   templateUrl: './back-assignment.component.html',
   styleUrl: './back-assignment.component.css',
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit {
 
   title: string = 'Update the assignments'
-  page: number = 0
-  size: number = 20
+
   isMobile!: boolean
+
+  toBeConfirmed: boolean = false
+  confirmed: boolean = true
 
   @ViewChild('scrollerConfirmed') scrollerConfirmed!: CdkVirtualScrollViewport
   @ViewChild('scrollerToBeConfirmed') scrollerToBeConfirmed!: CdkVirtualScrollViewport
@@ -54,6 +57,7 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
     public dialog: MatDialog,
     public assignmentService: AssignmentService,
     private snackbarService: SnackbarService,
+    private ngZone: NgZone
   ) {
   }
 
@@ -65,53 +69,56 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
         this.isMobile = isMobile
       })
 
-    this.assignmentService.getFilteredAssignmentList(this.page, this.size, true)
-      .subscribe(message => {
 
-        if (!isEmpty(message))
-          this.snackbarService.showAlert(String(message))
-
-      })
-
-    this.assignmentService.getFilteredAssignmentList(this.page, this.size, false)
-      .subscribe(message => {
-
-        if (!isEmpty(message))
-          this.snackbarService.showAlert(String(message))
-
-      })
+    this.getFilteredAssignmentList(this.confirmed, false)
+    this.getFilteredAssignmentList(this.toBeConfirmed, false)
 
 
   }
-
 
   ngAfterViewInit(): void {
 
     if (!this.scrollerConfirmed && !this.scrollerToBeConfirmed) return
 
+    this.scrollerToBeConfirmed.elementScrolled()
+      .pipe(
+        map(event => {
+          return this.scrollerToBeConfirmed.measureScrollOffset("bottom")
+        }),
+        pairwise(),
+        filter(([y1, y2]) => {
+          return y2 < y1 && y2 < 50
+        }),
+        throttleTime(300)
+      )
+      .subscribe(distance => {
+          this.ngZone.run(() => {
+            this.getFilteredAssignmentList(this.toBeConfirmed, true)
+          })
+        }
+      )
+
     this.scrollerConfirmed.elementScrolled()
       .pipe(
         map(event => {
           return this.scrollerConfirmed.measureScrollOffset("bottom")
-        })
+        }),
+        pairwise(),
+        filter(([y1, y2]) => {
+          return y2 < y1 && y2 < 50
+        }),
+        throttleTime(300)
       )
       .subscribe(distance => {
-          console.log("scrollerConfirmed")
+          this.ngZone.run(() => {
+            this.getFilteredAssignmentList(this.confirmed, true)
+          })
+
         }
       )
 
-    this.scrollerToBeConfirmed.elementScrolled()
-      .pipe(
-        map(event => {
-          return this.scrollerConfirmed.measureScrollOffset("bottom")
-        })
-      )
-      .subscribe(distance => {
-          console.log("scrollerToBeConfirmed")
-        }
-      )
+
   }
-
 
   drop(event: CdkDragDrop<IAssignment[], any>) {
 
@@ -121,13 +128,14 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
 
     } else {
 
+      let assignment = event.container.data[event.currentIndex]
+
       const dialogRef = this.dialog.open(ConfirmAssignmentComponent, {
-        data: 0,
+        data: assignment.score,
       })
 
       dialogRef.afterClosed().subscribe(result => {
         if (result != undefined && result != 0) {
-          console.log(`Dialog result: ${result}`)
 
           transferArrayItem(
             event.previousContainer.data,
@@ -136,7 +144,6 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
             event.currentIndex,
           )
 
-          let assignment = event.container.data[event.currentIndex]
           assignment.confirm = true
           assignment.score = result
 
@@ -154,11 +161,45 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-
   ngOnDestroy(): void {
 
     if (this.subscription) {
       this.subscription.unsubscribe()
+    }
+
+  }
+
+  private getFilteredAssignmentList(confirmed: boolean, add: boolean) {
+
+    let page: number = 1
+    let size: number = 10
+
+    let getAssignmentList = true
+
+
+    if (add && confirmed) {
+      if (this.assignmentService.confirmedAssignments.value.length < this.assignmentService.confirmedAssignmentsPaginationData.value.totalItems) {
+        page = this.assignmentService.confirmedAssignmentsPaginationData.value.page + 1
+      } else
+        getAssignmentList = false
+    }
+
+    if (add && !confirmed) {
+      if (this.assignmentService.notConfirmedAssignments.value.length < this.assignmentService.notConfirmedAssignmentsPaginationData.value.totalItems) {
+        page = this.assignmentService.notConfirmedAssignmentsPaginationData.value.page + 1
+      } else
+        getAssignmentList = false
+    }
+
+    if (getAssignmentList) {
+      this.assignmentService.getFilteredAssignmentList(page, size, confirmed, add)
+        .subscribe(message => {
+
+          if (!isEmpty(message))
+            this.snackbarService.showAlert(String(message))
+
+
+        })
     }
 
   }

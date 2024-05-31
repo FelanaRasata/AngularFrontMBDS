@@ -1,8 +1,8 @@
 <mat-paginator #paginator
-  (page)="setPage($event)"
-  [length]="length"
-  [pageIndex]="pageIndex"
-  [pageSize]="pageSize"
-  class="main-pagination"
-  showFirstLastButtons>
+               (page)="setPage($event)"
+               [length]="this.assignmentService.assignmentsPaginationData.value.totalItems"
+               [pageIndex]="this.assignmentService.assignmentsPaginationData.value.page-1"
+               [pageSize]="this.assignmentService.assignmentsPaginationData.value.limit"
+               class="main-pagination"
+               showFirstLastButtons>
 </mat-paginator>

@@ -5,7 +5,7 @@ export enum EUserRole {
 
 export enum EAssignmentLink {
   root = '/',
-  list  = '/assignment/list/1/20',
+  list  = '/assignment/list/1/10',
   add = '/assignment/add',
   back = '/assignment/back',
 }

@@ -55,15 +55,14 @@ export class AssignmentService {
   getFilteredAssignmentList(
     page: number,
     limit: number,
-    confirmed: boolean
+    confirmed: boolean,
+    add: boolean = false
   ): Observable<string | null> {
 
     let uri = this.endpoint + '?page=' + page + '&limit=' + limit
 
     if (!isEmpty(confirmed))
       uri += '&confirmed=' + confirmed
-
-    console.log(uri)
 
     return new Observable<string | null>((subscriber) => {
 
@@ -72,11 +71,29 @@ export class AssignmentService {
 
           if (response.status === 200) {
 
+
             if (confirmed) {
-              this.confirmedAssignments.next(response.data.items)
+
+              if (add)
+                this.confirmedAssignments.next([
+                  ...this.confirmedAssignments.value,
+                  ...response.data.items
+                ])
+
+              else
+                this.confirmedAssignments.next(response.data.items)
+
               this.paginationService.setPaginationData(response.data.paginator, this.confirmedAssignmentsPaginationData)
             } else {
-              this.notConfirmedAssignments.next(response.data.items)
+              if (add)
+                this.notConfirmedAssignments.next([
+                  ...this.notConfirmedAssignments.value,
+                  ...response.data.items
+                ])
+
+              else
+                this.notConfirmedAssignments.next(response.data.items)
+
               this.paginationService.setPaginationData(response.data.paginator, this.notConfirmedAssignmentsPaginationData)
             }
 
