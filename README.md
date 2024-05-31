@@ -27,7 +27,7 @@ To run the application locally, follow these steps:
    ```bash
    npm run start:dev
    ```
-3. Access the application at `http://localhost:4200`
+3. Access the application at `http://localhost:<API_PORT>`
 
 ---
 
