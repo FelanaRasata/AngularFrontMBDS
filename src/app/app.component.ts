@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { SharedService } from './shared/core/services/shared.service'
+import {LoaderService} from "@shared/core/services/loader.service";
 
 
 @Component({
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
   isMobile!: boolean
 
 
-  constructor(private sharedService: SharedService) {
+  constructor(private sharedService: SharedService,
+              public  loaderService: LoaderService)  {
   }
 
 

@@ -5,6 +5,7 @@ import {AssignmentService} from "@shared/core/services/assignment.service";
 import {SnackbarService} from "@shared/core/services/snackbar.service";
 import {Observable} from "rxjs";
 import {flush} from "@angular/core/testing";
+import {LoaderService} from "@shared/core/services/loader.service";
 
 export const assignmentListResolver: ResolveFn<boolean> = (route, state) => {
   const page = route.paramMap.get('page') ?  +route.paramMap.get('page')! : 1
@@ -13,7 +14,9 @@ export const assignmentListResolver: ResolveFn<boolean> = (route, state) => {
   const assignmentService = inject(AssignmentService)
   const snackbarService = inject(SnackbarService)
 
+  const loaderService = inject(LoaderService)
 
+  loaderService.hydrate(true)
   return new Observable<boolean>(subscriber => {
     assignmentService.getAssignmentList(page, limit)
       .subscribe(message => {
@@ -25,6 +28,7 @@ export const assignmentListResolver: ResolveFn<boolean> = (route, state) => {
         } else {
           subscriber.next(true)
         }
+        loaderService.hydrate(false)
 
         subscriber.complete()
 

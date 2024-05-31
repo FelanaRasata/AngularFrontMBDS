@@ -14,6 +14,7 @@ import {PaginatorPageComponent} from "@shared/components/paginator-page/paginato
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {LoaderService} from "@shared/core/services/loader.service";
 
 
 @Component({

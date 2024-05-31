@@ -14,6 +14,7 @@ import {UserService} from '@shared/core/services/user.service'
 import {SharedService} from '@shared/core/services/shared.service'
 import {SnackbarService} from '@shared/core/services/snackbar.service'
 import {AuthService} from '@shared/core/services/auth.service'
+import {LoaderService} from "@shared/core/services/loader.service";
 
 
 @Component({
@@ -53,6 +54,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private authService: AuthService,
     private router: Router,
+    private loaderService: LoaderService
   ) {
   }
 
@@ -90,6 +92,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   signIn(): void {
 
     // Connection with back-end
+    this.loaderService.hydrate(true)
     this.userService.signIn(this.username, this.password, this.role)
       .subscribe((response) => {
 
@@ -100,6 +103,7 @@ export class SignInComponent implements OnInit, OnDestroy {
         }
 
         this.snackbarService.action(message, EAssignmentLink.list)
+        this.loaderService.hydrate(false)
 
       })
 

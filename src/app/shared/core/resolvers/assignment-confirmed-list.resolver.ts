@@ -4,6 +4,7 @@ import {AssignmentService} from "@shared/core/services/assignment.service";
 import {SnackbarService} from "@shared/core/services/snackbar.service";
 import {Observable} from "rxjs";
 import {isEmpty} from "@shared/core/utils/utils";
+import {LoaderService} from "@shared/core/services/loader.service";
 
 export const assignmentConfirmedListResolver: ResolveFn<boolean> = (route, state) => {
   const page = 1
@@ -11,6 +12,9 @@ export const assignmentConfirmedListResolver: ResolveFn<boolean> = (route, state
 
   const assignmentService = inject(AssignmentService)
   const snackbarService = inject(SnackbarService)
+
+  const loaderService = inject(LoaderService)
+  loaderService.hydrate(true)
 
 
   return new Observable<boolean>(subscriber => {
@@ -24,6 +28,7 @@ export const assignmentConfirmedListResolver: ResolveFn<boolean> = (route, state
         } else {
           subscriber.next(true)
         }
+        loaderService.hydrate(false)
 
         subscriber.complete()
 

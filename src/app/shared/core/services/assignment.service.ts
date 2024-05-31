@@ -9,6 +9,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {EAssignmentLink} from "@shared/core/types/enums";
 import {Router} from "@angular/router";
 import {SnackbarService} from "@shared/core/services/snackbar.service";
+import {LoaderService} from "@shared/core/services/loader.service";
 
 
 @Injectable({
@@ -47,7 +48,8 @@ export class AssignmentService {
     private apiService: ApiService,
     private paginationService: PaginationService,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private loaderService: LoaderService
   ) {
   }
 
@@ -63,6 +65,8 @@ export class AssignmentService {
 
     if (!isEmpty(confirmed))
       uri += '&confirmed=' + confirmed
+
+    this.loaderService.hydrate(true)
 
     return new Observable<string | null>((subscriber) => {
 
@@ -97,6 +101,7 @@ export class AssignmentService {
               this.paginationService.setPaginationData(response.data.paginator, this.notConfirmedAssignmentsPaginationData)
             }
 
+            this.loaderService.hydrate(false)
             subscriber.next(null)
 
           } else {
@@ -122,6 +127,7 @@ export class AssignmentService {
 
     let uri = this.endpoint + '?page=' + page + '&limit=' + limit + '&search=' + search
 
+    this.loaderService.hydrate(true)
     return new Observable<string | null>((subscriber) => {
 
       this.apiService.get<IPaginationResult<IAssignment[]>>(baseUrl(uri))
@@ -142,6 +148,7 @@ export class AssignmentService {
 
           }
 
+          this.loaderService.hydrate(false)
           subscriber.complete()
 
         })
@@ -155,7 +162,7 @@ export class AssignmentService {
   getAssignment(_id: string): Observable<string | null> {
 
     const uri = this.endpoint + '/' + _id
-
+    this.loaderService.hydrate(true)
     return new Observable<string | null>((subscriber) => {
 
       this.apiService.get<IAssignment>(baseUrl(uri))
@@ -174,7 +181,7 @@ export class AssignmentService {
             subscriber.next(response.message)
 
           }
-
+          this.loaderService.hydrate(false)
           subscriber.complete()
 
         })
@@ -188,7 +195,7 @@ export class AssignmentService {
   updateAssignment(assignment: IAssignment): Observable<string | null> {
 
     const uri = this.endpoint + '/' + assignment._id
-
+    this.loaderService.hydrate(true)
     return new Observable<string | null>((subscriber) => {
 
       this.apiService.put<null>(baseUrl(uri), assignment)
@@ -207,7 +214,7 @@ export class AssignmentService {
             subscriber.next(response.message)
 
           }
-
+          this.loaderService.hydrate(false)
           subscriber.complete()
 
         })
@@ -224,7 +231,7 @@ export class AssignmentService {
     // return this.http.post<IResponseType<Assignment>>(baseUrl(uri), assignment);
 
     const uri = this.endpoint
-
+    this.loaderService.hydrate(true)
     return new Observable<string | null>((subscriber) => {
 
       this.apiService.post<null>(baseUrl(uri), assignment)
@@ -244,6 +251,7 @@ export class AssignmentService {
 
           }
 
+          this.loaderService.hydrate(false)
           subscriber.complete()
 
         })
