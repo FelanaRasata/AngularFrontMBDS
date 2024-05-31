@@ -1,6 +1,6 @@
 # Projet final - Assignments  (Frontend)
 
-## Project Description
+## Projet Description
 Un projet Angular 17 qui sert pour la gestion d'assignement.
 
 ### Installation locale
@@ -88,7 +88,7 @@ Modification d'assignement: c'est un autre moyen pour modifier les assignements
 
 ---
 
-Ce README.md sert comme guide pour installer, lancer, et comprendre le projet.
+Ce fichier README.md sert de guide pour installer, exécuter et comprendre le projet. Pour des informations plus détaillées, veuillez vous référer à la base de code et aux ressources supplémentaires fournies.
 
 ---
 
