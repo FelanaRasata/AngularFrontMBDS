@@ -116,10 +116,11 @@ export class AssignmentService {
 
   getAssignmentList(
     page: number,
-    limit: number
+    limit: number,
+    search: string = ''
   ): Observable<string | null> {
 
-    let uri = this.endpoint + '?page=' + page + '&limit=' + limit
+    let uri = this.endpoint + '?page=' + page + '&limit=' + limit + '&search=' + search
 
     return new Observable<string | null>((subscriber) => {
 

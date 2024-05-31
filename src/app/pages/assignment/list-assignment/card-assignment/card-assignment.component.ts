@@ -1,12 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
-import { MatCardModule } from '@angular/material/card'
-import { MatButtonModule } from '@angular/material/button'
-import { Subscription } from 'rxjs'
-import { SharedService } from '@shared/core/services/shared.service'
-import { RouterLink } from '@angular/router'
-import { IAssignment } from '@shared/core/models/entities/assignment.model'
-import { MatIconModule } from '@angular/material/icon'
-import { DatePipe } from '@angular/common'
+import {Component, Input, OnDestroy, OnInit} from '@angular/core'
+import {MatCardModule} from '@angular/material/card'
+import {MatButtonModule} from '@angular/material/button'
+import {Subscription} from 'rxjs'
+import {SharedService} from '@shared/core/services/shared.service'
+import {RouterLink} from '@angular/router'
+import {IAssignment} from '@shared/core/models/entities/assignment.model'
+import {MatIconModule} from '@angular/material/icon'
+import {DatePipe} from '@angular/common'
 
 
 @Component({
@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common'
     MatButtonModule,
     RouterLink,
     MatIconModule,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './card-assignment.component.html',
   styleUrl: './card-assignment.component.css'

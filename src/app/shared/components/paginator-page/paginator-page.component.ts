@@ -21,7 +21,7 @@ export class PaginatorPageComponent implements AfterViewInit {
 
 
 
-  @Output('page') page: EventEmitter<null> = new EventEmitter()
+  @Output('page') page: EventEmitter<number> = new EventEmitter()
 
 
   constructor(
@@ -35,16 +35,9 @@ export class PaginatorPageComponent implements AfterViewInit {
 
     // +1 car paginator index commence par 0
     // +1 car paginator de back index commence par 1
-    this.assignmentService.getAssignmentList((event.pageIndex + 1), event.pageSize)
-      .subscribe(message => {
+    this.page.emit(event.pageIndex + 1)
 
-        if (!isEmpty(message))
-          this.snackbarService.showAlert(String(message))
 
-        else
-          this.page.emit(null)
-
-      })
 
   }
 

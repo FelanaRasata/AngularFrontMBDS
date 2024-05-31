@@ -29,7 +29,7 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
     children: [
       {
-        path: 'list/:page/:size',
+        path: 'list/:page/:limit',
         component: ListAssignmentComponent,
       },
       {

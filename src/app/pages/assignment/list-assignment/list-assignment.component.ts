@@ -5,14 +5,15 @@ import {MatButtonModule} from '@angular/material/button'
 import {MatIconModule} from '@angular/material/icon'
 import {ActivatedRoute, NavigationEnd, Router, RouterModule} from '@angular/router'
 import {TitlePageComponent} from '@shared/components/title-page/title-page.component'
-import {IPaginationResult} from '@shared/core/types/interfaces'
-import {IAssignment} from '@shared/core/models/entities/assignment.model'
 import {SnackbarService} from '@shared/core/services/snackbar.service'
 import {AssignmentService} from '@shared/core/services/assignment.service'
 import {AuthService} from '@shared/core/services/auth.service'
 import {EAssignmentLink, EUserRole} from '@shared/core/types/enums'
 import {isEmpty} from '@shared/core/utils/utils'
 import {PaginatorPageComponent} from "@shared/components/paginator-page/paginator-page.component";
+import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 
 @Component({
@@ -25,12 +26,17 @@ import {PaginatorPageComponent} from "@shared/components/paginator-page/paginato
     MatIconModule,
     RouterModule,
     TitlePageComponent,
-    PaginatorPageComponent
+    PaginatorPageComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule
   ],
   templateUrl: './list-assignment.component.html',
   styleUrl: './list-assignment.component.css'
 })
 export class ListAssignmentComponent implements OnInit {
+
+  searchValue = '';
 
   title = 'List of assignment'
 
@@ -80,14 +86,37 @@ export class ListAssignmentComponent implements OnInit {
 
   }
 
-  scrollToTop(): void {
+  paginatorEvent(page: number): void {
+
+    this.assignmentService.getAssignmentList(page, this.assignmentService.assignmentsPaginationData.value.limit, this.searchValue)
+      .subscribe(message => {
+
+        if (!isEmpty(message))
+          this.snackbarService.showAlert(String(message))
+
+      })
+
     console.log(document.documentElement.style)
     if ('scrollBehavior' in document.documentElement.style) {
       console.log(1)
-      window.scroll({ top: 0, behavior: 'smooth' });
+      window.scroll({top: 0, behavior: 'smooth'});
     } else {
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     }
+  }
+
+  search() {
+
+    const page = this.route.snapshot.params['page']
+    const limit = this.route.snapshot.params['limit']
+
+    this.assignmentService.getAssignmentList(page, limit, this.searchValue)
+      .subscribe(message => {
+
+        if (!isEmpty(message))
+          this.snackbarService.showAlert(String(message))
+
+      })
   }
 }

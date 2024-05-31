@@ -131,11 +131,11 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
       let assignment = event.container.data[event.currentIndex]
 
       const dialogRef = this.dialog.open(ConfirmAssignmentComponent, {
-        data: assignment.score,
+        data: { score : assignment.score, remark: assignment.remark },
       })
 
       dialogRef.afterClosed().subscribe(result => {
-        if (result != undefined && result != 0) {
+        if (result) {
 
           transferArrayItem(
             event.previousContainer.data,
@@ -145,9 +145,12 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
           )
 
           assignment.confirm = true
-          assignment.score = result
+          assignment.score = result.score
+          assignment.remark = result.remark
 
-          this.assignmentService.updateAssignment(assignment).subscribe((message) => {
+          this.assignmentService
+            .updateAssignment(assignment)
+            .subscribe((message) => {
             if (!isEmpty(message))
               this.snackbarService.showAlert(String(message))
             else

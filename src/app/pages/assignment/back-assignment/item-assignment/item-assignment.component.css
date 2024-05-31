@@ -1,5 +1,5 @@
-mat-expansion-panel {
-  max-width: 100%;
+.mat-expansion {
+  width: 300px;
 }
 
 

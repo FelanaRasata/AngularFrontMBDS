@@ -11,6 +11,9 @@
           <mat-card-title>{{ assignmentService.assignment.value?.title }}</mat-card-title>
           <mat-card-subtitle>{{ assignmentService.assignment.value?.subject?.title }}</mat-card-subtitle>
         </mat-card-title-group>
+
+        <mat-divider></mat-divider>
+
         <li>
           <span class="label" matListItemTitle>Student</span>
           <span class="row" matListItemLine>{{ assignmentService.assignment.value?.student?.name }}</span>
@@ -31,9 +34,9 @@
           <span class="label" matListItemTitle>Confirmed</span>
           <span class="row" matListItemLine>
               @if (assignmentService.assignment.value?.confirm) {
-            <mat-icon>assignment_turned_in</mat-icon>
+                <mat-icon>assignment_turned_in</mat-icon>
               } @else {
-            <mat-icon>assignment</mat-icon>
+                <mat-icon>assignment</mat-icon>
               }
             </span>
         </li>

@@ -7,10 +7,27 @@
     </button>
   </div>
 
+
+  <div class="search-container">
+    <mat-form-field class="example-form-field">
+      <input matInput type="text" [(ngModel)]="searchValue">
+      @if (searchValue) {
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+    <button color="primary" extended mat-fab [disabled]="searchValue==''" (click)="search()">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+
   @for (assignment of assignmentService.assignments.value; track assignment) {
-  <app-card-assignment [assignment]="assignment"></app-card-assignment>
+    <app-card-assignment [assignment]="assignment"></app-card-assignment>
   }
 
-  <app-paginator-page (page)="scrollToTop()" ></app-paginator-page>
+  <app-paginator-page (page)="paginatorEvent($event)"></app-paginator-page>
 </div>
 

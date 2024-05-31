@@ -1,5 +1,5 @@
 <!--<div class="example-card">-->
-<mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true"
+<mat-expansion-panel [class.mat-expansion]="!isMobile"  (closed)="panelOpenState = false" (opened)="panelOpenState = true"
 >
   <mat-expansion-panel-header>
     <mat-panel-title>

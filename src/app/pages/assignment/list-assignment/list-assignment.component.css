@@ -8,3 +8,9 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.search-container{
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}

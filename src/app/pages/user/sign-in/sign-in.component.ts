@@ -36,8 +36,8 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   hide: boolean = true
 
-  username: string = 'btodarini0@smugmug.com'
-  password: string = '123456789'
+  username: string = 'plinfoot1@newsvine.com'
+  password: string = 'pwd123'
   role: EUserRole = EUserRole.tr
 
   title: string = 'Assignment Management'
