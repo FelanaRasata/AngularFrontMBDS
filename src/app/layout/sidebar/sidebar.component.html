@@ -5,7 +5,11 @@
   <a [disabled]="disabled" [routerLink]="[EAssignmentLink.back]" class="my-nav-item" mat-list-item>
     Update Assignments
   </a>
+  <a (click)="openProfile()" class="my-nav-item" mat-list-item>
+    Profile
+  </a>
   <a (click)="openDialog()" class="my-nav-item" mat-list-item>
     Sign Out
   </a>
+
 </mat-nav-list>

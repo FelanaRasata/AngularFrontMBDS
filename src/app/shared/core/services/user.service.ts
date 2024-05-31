@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
-import { IResponseType } from '../types/interfaces'
-import { IUser } from '../models/entities/user.model'
-import { baseUrl } from '../utils/utils'
-import { ApiService } from './api.service'
-import { ISignInPayload } from '../models/payloads/ISignInPayload'
-import { EUserRole } from '../types/enums'
+import {Injectable} from '@angular/core'
+import {HttpErrorResponse} from '@angular/common/http'
+import {BehaviorSubject, catchError, Observable} from 'rxjs'
+import {IResponseType} from '../types/interfaces'
+import {IUser} from '../models/entities/user.model'
+import {baseUrl} from '../utils/utils'
+import {ApiService} from './api.service'
+import {ISignInPayload} from '../models/payloads/ISignInPayload'
+import {EUserRole} from '../types/enums'
+import {AssignmentService} from "@shared/core/services/assignment.service";
 
 
 @Injectable({
@@ -16,8 +17,11 @@ export class UserService {
 
   endpoint = 'users'
 
+  user: BehaviorSubject<IUser | null> = new BehaviorSubject<IUser | null>(null)
+
   constructor(
     private apiService: ApiService,
+    private assignmentService: AssignmentService,
   ) {
   }
 
@@ -49,10 +53,34 @@ export class UserService {
    * token : le token correspondant l'utilisateur
    * return User : l'utilisateur  identifié par le token
    */
-  getUserByToken(): Observable<IResponseType<IUser>> {
+  getUserByToken(): Observable<string | null> {
 
-    const uri = this.endpoint
-    return this.apiService.get<IUser>(baseUrl(uri))
+    const uri = this.endpoint + "/current"
+
+    return new Observable<string | null>((subscriber) => {
+
+      this.apiService.get<IUser>(baseUrl(uri))
+        .pipe(
+          catchError((error: HttpErrorResponse) => this.assignmentService.handleError(error))
+        )
+        .subscribe((response) => {
+
+          if (response.status === 200) {
+
+            this.user.next(response.data)
+            subscriber.next(null)
+
+          } else {
+
+            subscriber.next(response.message)
+
+          }
+
+          subscriber.complete()
+
+        })
+
+    })
 
   }
 

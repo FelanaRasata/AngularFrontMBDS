@@ -261,7 +261,7 @@ export class AssignmentService {
 
   }
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
+  public handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
 
     if (error.status == 401) {

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core'
-import { MatListModule } from '@angular/material/list'
-import { Router, RouterLink } from '@angular/router'
-import { MatDialog } from '@angular/material/dialog'
-import { SignOutComponent } from '@pages/user/sign-out/sign-out.component'
-import { AuthService } from '@shared/core/services/auth.service'
+import {Component, OnInit} from '@angular/core'
+import {MatListModule} from '@angular/material/list'
+import {Router, RouterLink} from '@angular/router'
+import {MatDialog} from '@angular/material/dialog'
+import {SignOutComponent} from '@pages/user/sign-out/sign-out.component'
+import {AuthService} from '@shared/core/services/auth.service'
 import {EAssignmentLink, EUserRole} from '@shared/core/types/enums'
+import {ProfileComponent} from "@pages/user/profile/profile.component";
 
 
 @Component({
@@ -21,7 +22,7 @@ import {EAssignmentLink, EUserRole} from '@shared/core/types/enums'
 export class SidebarComponent implements OnInit {
 
   disabled = true
-
+  protected readonly EAssignmentLink = EAssignmentLink;
 
   constructor(
     public dialog: MatDialog,
@@ -29,7 +30,6 @@ export class SidebarComponent implements OnInit {
     private router: Router
   ) {
   }
-
 
   ngOnInit() {
 
@@ -39,7 +39,6 @@ export class SidebarComponent implements OnInit {
       })
 
   }
-
 
   openDialog() {
     const dialogRef = this.dialog.open(SignOutComponent)
@@ -56,5 +55,9 @@ export class SidebarComponent implements OnInit {
     })
   }
 
-    protected readonly EAssignmentLink = EAssignmentLink;
+  openProfile() {
+    const dialogRef = this.dialog.open(ProfileComponent)
+
+    dialogRef.afterClosed().subscribe()
+  }
 }

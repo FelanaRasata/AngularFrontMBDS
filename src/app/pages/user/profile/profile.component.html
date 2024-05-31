@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Profile</h2>
+<mat-dialog-content class="mat-typography">
+  <b>Name :</b>  {{ userService.user.value?.name }}
+  <br>
+  <b>Username :</b> <i>{{ userService.user.value?.username }}</i>
+  <br>
+  <b>Role :</b> <i>{{ userService.user.value?.role }}</i>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
