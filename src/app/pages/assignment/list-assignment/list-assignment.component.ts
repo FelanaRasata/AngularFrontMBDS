@@ -69,17 +69,6 @@ export class ListAssignmentComponent implements OnInit {
 
     })
 
-    const page = this.route.snapshot.params['page']
-    const limit = this.route.snapshot.params['limit']
-
-    this.assignmentService.getAssignmentList(page, limit)
-      .subscribe(message => {
-
-        if (!isEmpty(message))
-          this.snackbarService.showAlert(String(message))
-
-      })
-
     this.authService.isAuthorized(EUserRole.st).then(role => {
       this.disabledAdd = !role
     })

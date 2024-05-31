@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core'
 import {MatListModule} from '@angular/material/list'
 import {TitlePageComponent} from '@shared/components/title-page/title-page.component'
 import {AssignmentService} from '@shared/core/services/assignment.service'
-import {ActivatedRoute, NavigationEnd, Router, RouterLink} from '@angular/router'
+import {NavigationEnd, Router, RouterLink} from '@angular/router'
 import {MatButtonModule} from '@angular/material/button'
 import {MatCardModule} from '@angular/material/card'
 import {CommonModule, DatePipe} from '@angular/common'
@@ -17,7 +17,6 @@ import {MatIconModule} from '@angular/material/icon'
 import {SnackbarService} from '@shared/core/services/snackbar.service'
 import {AuthService} from '@shared/core/services/auth.service'
 import {EAssignmentLink, EUserRole} from '@shared/core/types/enums'
-import {isEmpty} from "@shared/core/utils/utils";
 
 
 @Component({
@@ -50,7 +49,6 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
 
   constructor(
     public assignmentService: AssignmentService,
-    private route: ActivatedRoute,
     private router: Router,
     private sharedService: SharedService,
     public dialog: MatDialog,
@@ -61,14 +59,7 @@ export class DetailAssignmentComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    // On récupère l'id de l'assignment dans l'URL à l'aide de ActivatedRoute
-    const id = this.route.snapshot.params['id']
 
-    // On utilise le service pour récupérer l'assignment avec cet id
-    this.assignmentService.getAssignment(id).subscribe((message) => {
-      if (!isEmpty(message))
-        this.snackbarService.showAlert(String(message))
-    })
 
     this.subscription = this.sharedService.isMobileObservable.subscribe(isMobile => {
       this.isMobile = isMobile

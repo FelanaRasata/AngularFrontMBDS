@@ -1,4 +1,4 @@
-# Projet final - Assignments  (Backend)
+# Projet final - Assignments  (Frontend)
 
 ## Project Description
 A Angular 17 project that serves for the assignments management.

@@ -9,6 +9,10 @@ import { SignInComponent } from '@pages/user/sign-in/sign-in.component'
 import { authGuard } from '@shared/core/guards/auth.guard'
 import { teacherGuard } from '@shared/core/guards/teacher.guard'
 import { studentGuard } from '@shared/core/guards/student.guard'
+import {assignmentResolver} from "@shared/core/resolvers/assignment.resolver";
+import {assignmentListResolver} from "@shared/core/resolvers/assignment-list.resolver";
+import {assignmentConfirmedListResolver} from "@shared/core/resolvers/assignment-confirmed-list.resolver";
+import {assignmentToBeConfirmedListResolver} from "@shared/core/resolvers/assignment-to-be-confirmed-list.resolver";
 
 
 export const routes: Routes = [
@@ -30,6 +34,9 @@ export const routes: Routes = [
     children: [
       {
         path: 'list/:page/:limit',
+        resolve: {
+          data: assignmentListResolver,
+        },
         component: ListAssignmentComponent,
       },
       {
@@ -40,21 +47,31 @@ export const routes: Routes = [
       {
 
         path: ':id/detail',
+        resolve: {
+          data: assignmentResolver,
+        },
         component: DetailAssignmentComponent
       },
       {
         path: ':id/edit',
         canActivate: [teacherGuard],
+        resolve: {
+          data: assignmentResolver,
+        },
         component: EditAssignmentComponent,
       },
       {
         path: 'back',
         canActivate: [teacherGuard],
+        resolve: {
+          dataConfirmed: assignmentConfirmedListResolver,
+          dataToBeConfirmed: assignmentToBeConfirmedListResolver,
+        },
         component: BackAssignmentComponent,
       },
       {
         path: '',
-        redirectTo: 'list/:page/:size',
+        redirectTo: 'list/:page/:limit',
         pathMatch: 'full'
       },
     ],

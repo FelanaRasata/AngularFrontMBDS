@@ -69,11 +69,6 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
         this.isMobile = isMobile
       })
 
-
-    this.getFilteredAssignmentList(this.confirmed, false)
-    this.getFilteredAssignmentList(this.toBeConfirmed, false)
-
-
   }
 
   ngAfterViewInit(): void {
@@ -93,7 +88,7 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
       )
       .subscribe(distance => {
           this.ngZone.run(() => {
-            this.getFilteredAssignmentList(this.toBeConfirmed, true)
+            this.getFilteredAssignmentList(this.toBeConfirmed)
           })
         }
       )
@@ -111,7 +106,7 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
       )
       .subscribe(distance => {
           this.ngZone.run(() => {
-            this.getFilteredAssignmentList(this.confirmed, true)
+            this.getFilteredAssignmentList(this.confirmed)
           })
 
         }
@@ -172,7 +167,7 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
 
   }
 
-  private getFilteredAssignmentList(confirmed: boolean, add: boolean) {
+  private getFilteredAssignmentList(confirmed: boolean) {
 
     let page: number = 1
     let size: number = 10
@@ -180,14 +175,14 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
     let getAssignmentList = true
 
 
-    if (add && confirmed) {
+    if (confirmed) {
       if (this.assignmentService.confirmedAssignments.value.length < this.assignmentService.confirmedAssignmentsPaginationData.value.totalItems) {
         page = this.assignmentService.confirmedAssignmentsPaginationData.value.page + 1
       } else
         getAssignmentList = false
     }
 
-    if (add && !confirmed) {
+    if (!confirmed) {
       if (this.assignmentService.notConfirmedAssignments.value.length < this.assignmentService.notConfirmedAssignmentsPaginationData.value.totalItems) {
         page = this.assignmentService.notConfirmedAssignmentsPaginationData.value.page + 1
       } else
@@ -195,7 +190,7 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     if (getAssignmentList) {
-      this.assignmentService.getFilteredAssignmentList(page, size, confirmed, add)
+      this.assignmentService.getFilteredAssignmentList(page, size, confirmed, true)
         .subscribe(message => {
 
           if (!isEmpty(message))
