@@ -82,7 +82,7 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
         }),
         pairwise(),
         filter(([y1, y2]) => {
-          return y2 < y1 && y2 < 50
+          return y2 < y1 && y2 < 150
         }),
         throttleTime(300)
       )
@@ -100,7 +100,7 @@ export class BackAssignmentComponent implements OnInit, OnDestroy, AfterViewInit
         }),
         pairwise(),
         filter(([y1, y2]) => {
-          return y2 < y1 && y2 < 50
+          return y2 < y1 && y2 < 150
         }),
         throttleTime(300)
       )
