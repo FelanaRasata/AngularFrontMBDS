@@ -1,6 +1,6 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8889/api/',
-  // apiUrl: "https://assignments-mbds.onrender.com/api/"
+  production: true,
+  // apiUrl: 'http://localhost:8889/api/',
+  apiUrl: "https://assignments-mbds.onrender.com/api/"
   // other variables
 }
