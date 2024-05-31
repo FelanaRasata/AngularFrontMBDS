@@ -3,3 +3,8 @@
   flex-direction: column;
   margin: 5px;
 }
+
+.back-button {
+  display: flex;
+  justify-content: flex-start;
+}

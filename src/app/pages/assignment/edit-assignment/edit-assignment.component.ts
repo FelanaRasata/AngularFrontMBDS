@@ -16,6 +16,9 @@ import {SharedService} from '@shared/core/services/shared.service'
 import {AssignmentService} from '@shared/core/services/assignment.service'
 import {SnackbarService} from '@shared/core/services/snackbar.service'
 import {ISubject} from '@shared/core/models/entities/subject.model'
+import {EAssignmentLink} from "@shared/core/types/enums";
+import {MatIcon} from "@angular/material/icon";
+import {RouterLink} from "@angular/router";
 
 
 @Component({
@@ -33,7 +36,9 @@ import {ISubject} from '@shared/core/models/entities/subject.model'
     MatSelectModule,
     TitlePageComponent,
     MatSlideToggleModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatIcon,
+    RouterLink
   ],
   templateUrl: './edit-assignment.component.html',
   styleUrl: './edit-assignment.component.css'
@@ -157,4 +162,5 @@ export class EditAssignmentComponent implements OnInit, OnDestroy {
 
   }
 
+  protected readonly EAssignmentLink = EAssignmentLink;
 }
