@@ -1,19 +1,19 @@
-import {Component, OnInit} from '@angular/core'
-import {CardAssignmentComponent} from './card-assignment/card-assignment.component'
-import {MatDividerModule} from '@angular/material/divider'
-import {MatButtonModule} from '@angular/material/button'
-import {MatIconModule} from '@angular/material/icon'
-import {ActivatedRoute, NavigationEnd, Router, RouterModule} from '@angular/router'
-import {TitlePageComponent} from '@shared/components/title-page/title-page.component'
-import {SnackbarService} from '@shared/core/services/snackbar.service'
-import {AssignmentService} from '@shared/core/services/assignment.service'
-import {AuthService} from '@shared/core/services/auth.service'
-import {EAssignmentLink, EUserRole} from '@shared/core/types/enums'
-import {isEmpty} from '@shared/core/utils/utils'
-import {PaginatorPageComponent} from "@shared/components/paginator-page/paginator-page.component";
-import {FormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
-import {MatFormFieldModule} from "@angular/material/form-field";
+import { Component, NgZone, OnInit } from '@angular/core'
+import { CardAssignmentComponent } from './card-assignment/card-assignment.component'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router'
+import { TitlePageComponent } from '@shared/components/title-page/title-page.component'
+import { SnackbarService } from '@shared/core/services/snackbar.service'
+import { AssignmentService } from '@shared/core/services/assignment.service'
+import { AuthService } from '@shared/core/services/auth.service'
+import { EAssignmentLink, EUserRole } from '@shared/core/types/enums'
+import { isEmpty } from '@shared/core/utils/utils'
+import { PaginatorPageComponent } from '@shared/components/paginator-page/paginator-page.component'
+import { FormsModule } from '@angular/forms'
+import { MatInputModule } from '@angular/material/input'
+import { MatFormFieldModule } from '@angular/material/form-field'
 
 
 @Component({
@@ -36,12 +36,13 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 })
 export class ListAssignmentComponent implements OnInit {
 
-  searchValue = '';
+  searchValue = ''
 
   title = 'List of assignment'
 
   disabledAdd = true
-  protected readonly EAssignmentLink = EAssignmentLink;
+  protected readonly EAssignmentLink = EAssignmentLink
+
 
   constructor(
     private router: Router,
@@ -49,8 +50,10 @@ export class ListAssignmentComponent implements OnInit {
     public assignmentService: AssignmentService,
     private authService: AuthService,
     private route: ActivatedRoute,
+    private ngZone: NgZone,
   ) {
   }
+
 
   ngOnInit() {
 
@@ -75,25 +78,42 @@ export class ListAssignmentComponent implements OnInit {
 
   }
 
+  scrollToTop() {
+
+    // Hack: Scrolls to top of Page after page view initialized
+    let top = document.getElementById('huhu');
+
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
+
+  }
+
   paginatorEvent(page: number): void {
 
     this.assignmentService.getAssignmentList(page, this.assignmentService.assignmentsPaginationData.value.limit, this.searchValue)
       .subscribe(message => {
 
-        if (!isEmpty(message))
+        if (!isEmpty(message)) {
+
           this.snackbarService.showAlert(String(message))
+
+        }
+
+        this.scrollToTop()
 
       })
 
-    console.log(document.documentElement.style)
-    if ('scrollBehavior' in document.documentElement.style) {
+    /*if ('scrollBehavior' in document.documentElement.style) {
       console.log(1)
-      window.scroll({top: 0, behavior: 'smooth'});
+      window.scroll({ top: 0, behavior: 'smooth' })
     } else {
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+    }*/
   }
+
 
   search() {
 

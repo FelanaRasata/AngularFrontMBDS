@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core'
-import {BehaviorSubject, catchError, Observable, throwError} from 'rxjs'
-import {IPaginationData, IPaginationResult, IResponseType} from '../types/interfaces'
-import {baseUrl, isEmpty} from '../utils/utils'
-import {IAssignment} from '../models/entities/assignment.model'
-import {ApiService} from '@shared/core/services/api.service'
-import {PaginationService} from '@shared/core/services/pagination.service'
-import {HttpErrorResponse} from "@angular/common/http";
-import {EAssignmentLink} from "@shared/core/types/enums";
-import {Router} from "@angular/router";
-import {SnackbarService} from "@shared/core/services/snackbar.service";
+import { Injectable } from '@angular/core'
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs'
+import { IPaginationData, IPaginationResult, IResponseType } from '../types/interfaces'
+import { baseUrl, isEmpty } from '../utils/utils'
+import { IAssignment } from '../models/entities/assignment.model'
+import { ApiService } from '@shared/core/services/api.service'
+import { PaginationService } from '@shared/core/services/pagination.service'
+import { HttpErrorResponse } from '@angular/common/http'
+import { EAssignmentLink } from '@shared/core/types/enums'
+import { Router } from '@angular/router'
+import { SnackbarService } from '@shared/core/services/snackbar.service'
 
 
 @Injectable({
